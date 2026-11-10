@@ -1,0 +1,104 @@
+<div class="auth-page">
+  <div class="auth-card card">
+    <div class="auth-brand">
+      <span class="brand-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+          <circle cx="9" cy="7" r="4"></circle>
+          <line x1="19" y1="8" x2="19" y2="14"></line>
+          <line x1="22" y1="11" x2="16" y2="11"></line>
+        </svg>
+      </span>
+      <span>Disponibilidad Docente</span>
+    </div>
+
+    <h2 class="auth-title">Crea tu cuenta docente</h2>
+    <p class="auth-sub">Registra tus datos para gestionar tu disponibilidad</p>
+
+    <div class="msg-box msg-error" *ngIf="error">
+      <span>{{ error }}</span>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="nombre">Nombre</label>
+          <input id="nombre" class="form-control" type="text" formControlName="nombre" placeholder="Laura"
+                 [class.invalid]="form.get('nombre')?.invalid && form.get('nombre')?.touched">
+          <span class="field-error" *ngIf="form.get('nombre')?.invalid && form.get('nombre')?.touched">
+            Ingresa un nombre válido.
+          </span>
+        </div>
+
+        <div class="form-group">
+          <label for="apellido">Apellido</label>
+          <input id="apellido" class="form-control" type="text" formControlName="apellido" placeholder="Soto"
+                 [class.invalid]="form.get('apellido')?.invalid && form.get('apellido')?.touched">
+          <span class="field-error" *ngIf="form.get('apellido')?.invalid && form.get('apellido')?.touched">
+            Ingresa un apellido válido.
+          </span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="correo">Correo electrónico</label>
+        <input id="correo" class="form-control" type="email" formControlName="correo" placeholder="docente@unbosque.edu.co"
+               [class.invalid]="form.get('correo')?.invalid && form.get('correo')?.touched">
+        <span class="field-error" *ngIf="form.get('correo')?.invalid && form.get('correo')?.touched">
+          Ingresa un correo electrónico válido.
+        </span>
+      </div>
+
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="nombreUsuario">Nombre de usuario</label>
+          <input id="nombreUsuario" class="form-control" type="text" formControlName="nombreUsuario" placeholder="laura.soto"
+                 [class.invalid]="form.get('nombreUsuario')?.invalid && form.get('nombreUsuario')?.touched">
+          <span class="field-error" *ngIf="form.get('nombreUsuario')?.invalid && form.get('nombreUsuario')?.touched">
+            Entre 3 y 40 caracteres (letras, números, punto, guion).
+          </span>
+        </div>
+
+        <div class="form-group">
+          <label for="telefono">Teléfono</label>
+          <input id="telefono" class="form-control" type="tel" formControlName="telefono" placeholder="3001234567"
+                 [class.invalid]="form.get('telefono')?.invalid && form.get('telefono')?.touched">
+          <span class="field-error" *ngIf="form.get('telefono')?.invalid && form.get('telefono')?.touched">
+            Entre 7 y 15 dígitos.
+          </span>
+        </div>
+      </div>
+
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="contrasena">Contraseña</label>
+          <input id="contrasena" class="form-control" type="password" formControlName="contrasena" placeholder="••••••••"
+                 autocomplete="new-password"
+                 [class.invalid]="form.get('contrasena')?.invalid && form.get('contrasena')?.touched">
+          <span class="field-error" *ngIf="form.get('contrasena')?.invalid && form.get('contrasena')?.touched">
+            Mínimo 8 caracteres.
+          </span>
+        </div>
+
+        <div class="form-group">
+          <label for="confirmar">Confirmar contraseña</label>
+          <input id="confirmar" class="form-control" type="password" formControlName="confirmarContrasena" placeholder="••••••••"
+                 autocomplete="new-password"
+                 [class.invalid]="form.get('confirmarContrasena')?.touched && form.hasError('noCoinciden')">
+          <span class="field-error" *ngIf="form.get('confirmarContrasena')?.touched && form.hasError('noCoinciden')">
+            Las contraseñas no coinciden.
+          </span>
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-primary btn-block" [disabled]="cargando">
+        <span class="spinner" *ngIf="cargando"></span>
+        {{ cargando ? 'Creando cuenta...' : 'Crear cuenta' }}
+      </button>
+    </form>
+
+    <p class="auth-footer">
+      ¿Ya tienes cuenta? <a routerLink="/login">Inicia sesión</a>
+    </p>
+  </div>
+</div>
