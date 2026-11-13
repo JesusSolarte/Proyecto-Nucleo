@@ -11,7 +11,7 @@ const PATRON_USUARIO = '^[a-zA-Z0-9._-]+$';
 const PATRON_TELEFONO = '^[0-9]{7,15}$';
 
 @Component({
-  selector: 'app-register',
+  selector: 'register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
 })

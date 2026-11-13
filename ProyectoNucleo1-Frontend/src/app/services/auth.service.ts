@@ -10,10 +10,6 @@ import { AuthResponse } from '../models/auth-response';
 const CLAVE_TOKEN = 'jwt_token';
 const CLAVE_USUARIO = 'usuario';
 
-/**
- * Gestiona el ciclo de vida de la sesión: login, registro, logout y
- * almacenamiento del token JWT.
- */
 @Injectable({ providedIn: 'root' })
 export class AuthService {
 

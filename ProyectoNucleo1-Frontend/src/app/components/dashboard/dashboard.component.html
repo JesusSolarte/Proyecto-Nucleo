@@ -1,140 +1,129 @@
-<section class="page">
-  <header class="page-head">
+<section class="pagina">
+  <header class="d-flex flex-wrap justify-content-between align-items-end gap-3 mb-4 animate__animated animate__fadeInDown">
     <div>
-      <h1 class="page-title">Mis bloques de disponibilidad</h1>
-      <p class="page-sub">Hola, {{ auth.getCurrentUser()?.nombre }}. Administra tu horario semanal.</p>
+      <h1 class="titulo-pagina">Mis bloques</h1>
+      <p class="subtitulo-pagina">Hola, {{ auth.getCurrentUser()?.nombre }}. Administra tu horario semanal.</p>
     </div>
-    <button class="btn btn-outline" type="button" (click)="cargarBloques()">Actualizar</button>
+    <button class="btn btn-vidrio" type="button" (click)="cargarBloques()">Actualizar</button>
   </header>
 
-  <div class="msg-box msg-error" *ngIf="error">
-    <span>{{ error }}</span>
-  </div>
-  <div class="msg-box msg-success" *ngIf="exito">
-    <span>{{ exito }}</span>
+  <div class="aviso aviso-error animate__animated animate__headShake" *ngIf="error">{{ error }}</div>
+  <div class="aviso aviso-exito animate__animated animate__fadeIn" *ngIf="exito">{{ exito }}</div>
+
+  <div class="row g-3 mb-4">
+    <div class="col-md-4 animate__animated animate__fadeInUp">
+      <article class="vidrio dato">
+        <span class="dato-valor">{{ bloques.length }}</span>
+        <span class="dato-nombre">Bloques registrados</span>
+      </article>
+    </div>
+    <div class="col-md-4 animate__animated animate__fadeInUp">
+      <article class="vidrio dato">
+        <span class="dato-valor">{{ diasConDisponibilidad }}</span>
+        <span class="dato-nombre">Días con disponibilidad</span>
+      </article>
+    </div>
+    <div class="col-md-4 animate__animated animate__fadeInUp">
+      <article class="vidrio dato">
+        <span class="dato-valor">{{ horasSemanales }}</span>
+        <span class="dato-nombre">Tiempo disponible por semana</span>
+      </article>
+    </div>
   </div>
 
-  <div class="stats">
-    <article class="card stat">
-      <span class="stat-value">{{ bloques.length }}</span>
-      <span class="stat-label">Bloques registrados</span>
-    </article>
-    <article class="card stat">
-      <span class="stat-value">{{ diasConDisponibilidad }}</span>
-      <span class="stat-label">Días con disponibilidad</span>
-    </article>
-    <article class="card stat">
-      <span class="stat-value stat-value-small">{{ horasSemanales }}</span>
-      <span class="stat-label">Tiempo disponible por semana</span>
-    </article>
-  </div>
-
-  <div class="layout">
-    <aside class="card form-card">
-      <div class="card-head">
-        <h2 class="section-title">{{ editandoId !== null ? 'Editar bloque' : 'Nuevo bloque' }}</h2>
-        <span class="badge badge-accent" *ngIf="editandoId !== null">Editando</span>
-      </div>
-
-      <form [formGroup]="form" (ngSubmit)="guardar()">
-        <div class="form-group">
-          <label for="dia">Día de la semana</label>
-          <select id="dia" class="form-control" formControlName="diaSemana">
-            <option *ngFor="let dia of dias" [value]="dia.valor">{{ dia.etiqueta }}</option>
-          </select>
+  <div class="row g-4">
+    <div class="col-lg-4 animate__animated animate__fadeInLeft">
+      <aside class="vidrio panel formulario">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h2 class="titulo-seccion">{{ editandoId !== null ? 'Editar bloque' : 'Nuevo bloque' }}</h2>
+          <span class="etiqueta" *ngIf="editandoId !== null">Editando</span>
         </div>
 
-        <div class="time-grid">
-          <div class="form-group">
-            <label for="inicio">Hora inicio</label>
-            <input id="inicio" class="form-control" type="time" formControlName="horaInicio">
+        <form [formGroup]="form" (ngSubmit)="guardar()">
+          <div class="mb-3">
+            <label class="form-label" for="dia">Día de la semana</label>
+            <select id="dia" class="form-select" formControlName="diaSemana">
+              <option *ngFor="let dia of dias" [value]="dia.valor">{{ dia.etiqueta }}</option>
+            </select>
           </div>
-          <div class="form-group">
-            <label for="fin">Hora fin</label>
-            <input id="fin" class="form-control" type="time" formControlName="horaFin">
+
+          <div class="row g-2 mb-3">
+            <div class="col-6">
+              <label class="form-label" for="inicio">Hora inicio</label>
+              <input id="inicio" class="form-control hora" type="time" formControlName="horaInicio">
+            </div>
+            <div class="col-6">
+              <label class="form-label" for="fin">Hora fin</label>
+              <input id="fin" class="form-control hora" type="time" formControlName="horaFin">
+            </div>
           </div>
+
+          <div class="d-flex gap-2">
+            <button type="submit" class="btn btn-ambar flex-grow-1" [disabled]="guardando">
+              <span class="spinner-border spinner-border-sm me-2" *ngIf="guardando"></span>
+              {{ editandoId !== null ? 'Guardar cambios' : 'Agregar bloque' }}
+            </button>
+            <button type="button" class="btn btn-vidrio" *ngIf="editandoId !== null" (click)="cancelarEdicion()">
+              Cancelar
+            </button>
+          </div>
+        </form>
+
+        <p class="nota">El sistema rechaza los bloques que se crucen con otro del mismo día.</p>
+      </aside>
+    </div>
+
+    <div class="col-lg-8 animate__animated animate__fadeInRight">
+      <section class="vidrio panel mb-4">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h2 class="titulo-seccion">Vista semanal</h2>
+          <span class="etiqueta etiqueta-turquesa">Semana tipo</span>
         </div>
 
-        <div class="form-actions">
-          <button type="submit" class="btn btn-primary" [disabled]="guardando">
-            <span class="spinner" *ngIf="guardando"></span>
-            {{ editandoId !== null ? 'Guardar cambios' : 'Agregar bloque' }}
-          </button>
-          <button type="button" class="btn btn-outline" *ngIf="editandoId !== null" (click)="cancelarEdicion()">
-            Cancelar
-          </button>
-        </div>
-      </form>
-
-      <p class="form-hint">
-        El sistema rechaza automáticamente los bloques que se crucen con otro del mismo día.
-      </p>
-    </aside>
-
-    <div class="main-col">
-      <section class="card calendar-card">
-        <div class="card-head">
-          <h2 class="section-title">Vista semanal</h2>
-          <span class="badge badge-teal">Semana tipo</span>
-        </div>
-
-        <div class="week-grid">
-          <div class="day-col" *ngFor="let col of calendario">
-            <div class="day-head">{{ col.etiqueta }}</div>
-            <div class="day-body">
-              <button type="button" class="time-chip" *ngFor="let b of col.bloques" (click)="editar(b)" title="Editar bloque">
-                <span>{{ horaCorta(b.horaInicio) }}</span>
-                <span class="chip-sep">–</span>
-                <span>{{ horaCorta(b.horaFin) }}</span>
+        <div class="semana">
+          <div class="dia" *ngFor="let col of calendario">
+            <div class="dia-nombre">{{ col.etiqueta }}</div>
+            <div class="dia-cuerpo">
+              <button type="button" class="bloque hora" *ngFor="let b of col.bloques" (click)="editar(b)" title="Editar bloque">
+                {{ horaCorta(b.horaInicio) }}<br>{{ horaCorta(b.horaFin) }}
               </button>
-              <span class="no-blocks" *ngIf="col.bloques.length === 0">Libre</span>
+              <span class="libre" *ngIf="col.bloques.length === 0">Libre</span>
             </div>
           </div>
         </div>
       </section>
 
-      <section class="card list-card">
-        <div class="card-head">
-          <h2 class="section-title">Todos los bloques</h2>
-          <span class="badge badge-accent">{{ bloques.length }}</span>
+      <section class="vidrio panel">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h2 class="titulo-seccion">Todos los bloques</h2>
+          <span class="etiqueta">{{ bloques.length }}</span>
         </div>
 
-        <div class="empty-state" *ngIf="cargando">Cargando bloques...</div>
-        <div class="empty-state" *ngIf="!cargando && bloques.length === 0">
+        <div class="vacio" *ngIf="cargando">
+          <span class="spinner-border spinner-border-sm me-2"></span> Cargando bloques...
+        </div>
+        <div class="vacio" *ngIf="!cargando && bloques.length === 0">
           Aún no has registrado bloques de disponibilidad.
         </div>
 
-        <div class="table-wrapper" *ngIf="!cargando && bloques.length > 0">
-          <table class="blocks-table">
+        <div class="table-responsive" *ngIf="!cargando && bloques.length > 0">
+          <table class="table tabla mb-0">
             <thead>
               <tr>
                 <th>Día</th>
                 <th>Inicio</th>
                 <th>Fin</th>
-                <th class="actions-col">Acciones</th>
+                <th class="text-end">Acciones</th>
               </tr>
             </thead>
             <tbody>
               <tr *ngFor="let b of bloquesOrdenados">
-                <td><span class="day-pill">{{ etiquetaDia(b.diaSemana) }}</span></td>
-                <td class="mono">{{ horaCorta(b.horaInicio) }}</td>
-                <td class="mono">{{ horaCorta(b.horaFin) }}</td>
-                <td class="actions-col">
-                  <button class="icon-btn" type="button" (click)="editar(b)" title="Editar" aria-label="Editar">
-                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                      <path d="M12 20h9"></path>
-                      <path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"></path>
-                    </svg>
-                  </button>
-                  <button class="icon-btn icon-btn-danger" type="button" (click)="eliminar(b)" title="Eliminar" aria-label="Eliminar">
-                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                      <polyline points="3 6 5 6 21 6"></polyline>
-                      <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"></path>
-                      <path d="M10 11v6"></path>
-                      <path d="M14 11v6"></path>
-                      <path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"></path>
-                    </svg>
-                  </button>
+                <td><span class="etiqueta">{{ etiquetaDia(b.diaSemana) }}</span></td>
+                <td class="hora">{{ horaCorta(b.horaInicio) }}</td>
+                <td class="hora">{{ horaCorta(b.horaFin) }}</td>
+                <td class="text-end">
+                  <button class="btn btn-vidrio btn-sm me-2" type="button" (click)="editar(b)">Editar</button>
+                  <button class="btn btn-sm btn-borrar" type="button" (click)="eliminar(b)">Eliminar</button>
                 </td>
               </tr>
             </tbody>

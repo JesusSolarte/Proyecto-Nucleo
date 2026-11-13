@@ -6,10 +6,6 @@ import { API_BASE } from '../config';
 import { UsuarioDTO } from '../models/usuario-dto';
 import { BloqueDisponibilidadDTO } from '../models/bloque-disponibilidad-dto';
 
-/**
- * Consume los endpoints de consulta pública y de gestión de bloques de
- * disponibilidad.
- */
 @Injectable({ providedIn: 'root' })
 export class DisponibilidadService {
 

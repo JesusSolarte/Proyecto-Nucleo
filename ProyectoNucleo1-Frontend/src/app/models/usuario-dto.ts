@@ -1,6 +1,3 @@
-/**
- * DTO de usuario expuesto por el backend.
- */
 export interface UsuarioDTO {
   id?: number;
   nombre: string;

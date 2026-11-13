@@ -13,7 +13,7 @@ interface ColumnaDia {
 }
 
 @Component({
-  selector: 'app-consulta',
+  selector: 'consulta',
   templateUrl: './consulta.component.html',
   styleUrls: ['./consulta.component.css']
 })
