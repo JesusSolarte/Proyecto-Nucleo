@@ -2,9 +2,6 @@ import { Injectable } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 
-/**
- * Protege las rutas que requieren una sesión activa.
- */
 @Injectable({ providedIn: 'root' })
 export class AuthGuard implements CanActivate {
 

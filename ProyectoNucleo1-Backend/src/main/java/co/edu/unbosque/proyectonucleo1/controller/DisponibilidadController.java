@@ -41,7 +41,11 @@ public class DisponibilidadController {
 		List<UsuarioDTO> docentes = new ArrayList<>();
 		for (UsuarioDTO usuario : usuarioService.listar()) {
 			if (usuario.getRol() == RolUsuario.DOCENTE) {
-				docentes.add(usuario);
+				UsuarioDTO docente = new UsuarioDTO();
+				docente.setId(usuario.getId());
+				docente.setNombre(usuario.getNombre());
+				docente.setApellido(usuario.getApellido());
+				docentes.add(docente);
 			}
 		}
 		return new ResponseEntity<>(docentes, HttpStatus.OK);

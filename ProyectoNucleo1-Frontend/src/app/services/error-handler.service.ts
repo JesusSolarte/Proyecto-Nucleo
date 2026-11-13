@@ -1,10 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 
-/**
- * Extrae mensajes de error legibles desde las respuestas del backend.
- * El backend responde con un cuerpo uniforme: { fecha, estado, mensaje }.
- */
 @Injectable({ providedIn: 'root' })
 export class ErrorHandlerService {
 

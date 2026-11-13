@@ -11,7 +11,7 @@ const PATRON_USUARIO = '^[a-zA-Z0-9._-]+$';
 const PATRON_TELEFONO = '^[0-9]{7,15}$';
 
 @Component({
-  selector: 'app-register',
+  selector: 'register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
 })
@@ -28,11 +28,11 @@ export class RegisterComponent {
     private errorHandler: ErrorHandlerService
   ) {
     this.form = this.fb.group({
-      nombre: ['', [Validators.required, Validators.minLength(2), Validators.pattern(PATRON_NOMBRE)]],
-      apellido: ['', [Validators.required, Validators.minLength(2), Validators.pattern(PATRON_NOMBRE)]],
+      nombre: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(60), Validators.pattern(PATRON_NOMBRE)]],
+      apellido: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(60), Validators.pattern(PATRON_NOMBRE)]],
       correo: ['', [Validators.required, Validators.email]],
       nombreUsuario: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(40), Validators.pattern(PATRON_USUARIO)]],
-      telefono: ['', [Validators.required, Validators.pattern(PATRON_TELEFONO)]],
+      telefono: ['', [Validators.pattern(PATRON_TELEFONO)]],
       contrasena: ['', [Validators.required, Validators.minLength(8)]],
       confirmarContrasena: ['', [Validators.required]]
     }, { validators: this.contrasenasIguales });

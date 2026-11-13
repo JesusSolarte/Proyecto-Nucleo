@@ -2,9 +2,6 @@ import { Injectable } from '@angular/core';
 
 const CLAVE_TEMA = 'tema';
 
-/**
- * Gestiona el tema claro/oscuro de la aplicación y lo persiste.
- */
 @Injectable({ providedIn: 'root' })
 export class ThemeService {
 

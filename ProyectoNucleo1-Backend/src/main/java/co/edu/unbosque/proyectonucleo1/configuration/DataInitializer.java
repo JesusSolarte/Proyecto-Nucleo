@@ -3,7 +3,6 @@ package co.edu.unbosque.proyectonucleo1.configuration;
 import java.time.LocalTime;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -22,19 +21,6 @@ import co.edu.unbosque.proyectonucleo1.util.enums.RolUsuario;
 @Component
 public class DataInitializer implements CommandLineRunner {
 
-	@Value("${app.admin.nombre}")
-	private String adminNombre;
-	@Value("${app.admin.apellido}")
-	private String adminApellido;
-	@Value("${app.admin.correo}")
-	private String adminCorreo;
-	@Value("${app.admin.nombre-usuario}")
-	private String adminNombreUsuario;
-	@Value("${app.admin.contrasena}")
-	private String adminContrasena;
-	@Value("${app.admin.telefono}")
-	private String adminTelefono;
-
 	private final UsuarioRepository usuarioRepository;
 	private final BloqueDisponibilidadRepository bloqueRepository;
 	private final PasswordEncoder passwordEncoder;
@@ -48,9 +34,9 @@ public class DataInitializer implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) {
-		if (!usuarioRepository.existsByNombreUsuario(adminNombreUsuario)) {
-			usuarioRepository.save(new Usuario(adminNombre, adminApellido, adminCorreo, adminNombreUsuario,
-					passwordEncoder.encode(adminContrasena), adminTelefono, RolUsuario.ADMIN));
+		if (!usuarioRepository.existsByNombreUsuario("admin")) {
+			usuarioRepository.save(new Usuario("Administrador", "Sistema", "admin@proyectonucleo1.local", "admin",
+					passwordEncoder.encode("Admin12345"), "3000000000", RolUsuario.ADMIN));
 		}
 
 		if (!usuarioRepository.existsByNombreUsuario("docente")) {

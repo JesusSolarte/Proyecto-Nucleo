@@ -9,7 +9,6 @@ import java.util.Date;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.test.util.ReflectionTestUtils;
 
 import co.edu.unbosque.proyectonucleo1.entity.Usuario;
 import co.edu.unbosque.proyectonucleo1.util.enums.RolUsuario;
@@ -25,8 +24,6 @@ class JwtUtilTest {
 	@BeforeEach
 	void setUp() {
 		jwtUtil = new JwtUtil();
-		ReflectionTestUtils.setField(jwtUtil, "secreto",
-				"claveDePruebaMuyLargaParaHS256ProyectoNucleo1_2026_ABCDEFGHIJ");
 	}
 
 	@Test

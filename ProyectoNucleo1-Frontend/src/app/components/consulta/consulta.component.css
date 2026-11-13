@@ -1,208 +1,152 @@
-.page-head {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 1rem;
-  margin-bottom: 1.6rem;
-}
-
-.selector-card {
-  padding: 1.4rem 1.5rem;
-  margin-bottom: 1.3rem;
-}
-
-.selector-card .form-group {
-  margin-bottom: 0;
-}
-
-.selector-hint {
-  margin-top: 0.75rem;
-  font-size: 0.78rem;
-  color: var(--text-tertiary);
-}
-
-.docente-resumen {
-  display: flex;
-  align-items: center;
-  gap: 1.1rem;
-  padding: 1.3rem 1.5rem;
-  margin-bottom: 1.3rem;
-}
-
-.docente-avatar {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 56px;
-  height: 56px;
-  border-radius: 16px;
-  background: var(--accent-light);
-  color: var(--accent);
-  font-size: 1.15rem;
-  font-weight: 800;
-  letter-spacing: -0.5px;
-  flex-shrink: 0;
-}
-
-.docente-info {
-  flex: 1;
-  min-width: 0;
-}
-
-.docente-info h2 {
-  font-size: 1.15rem;
-  font-weight: 700;
-  letter-spacing: -0.3px;
-}
-
-.docente-info p {
-  margin-top: 2px;
-  font-size: 0.83rem;
-  color: var(--text-tertiary);
-}
-
-.docente-stats {
-  display: flex;
-  gap: 1.6rem;
-}
-
-.mini-stat {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-}
-
-.mini-value {
-  font-size: 1.25rem;
-  font-weight: 800;
-  color: var(--accent);
-  letter-spacing: -0.5px;
-}
-
-.mini-value-small {
-  font-size: 1rem;
-}
-
-.mini-label {
-  font-size: 0.68rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: var(--text-tertiary);
-}
-
-.calendar-card {
+.panel {
   padding: 1.5rem;
 }
 
-.card-head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.75rem;
-  margin-bottom: 1.1rem;
+.lista {
+  position: sticky;
+  top: 100px;
 }
 
-.week-grid {
-  display: grid;
-  grid-template-columns: repeat(7, minmax(88px, 1fr));
-  gap: 8px;
-  overflow-x: auto;
-  padding-bottom: 4px;
-}
-
-.day-col {
-  display: flex;
-  flex-direction: column;
-  border: 1px solid var(--border-secondary);
-  border-radius: 12px;
-  overflow: hidden;
-  background: var(--bg-tertiary);
-}
-
-.day-head {
-  padding: 8px 6px;
-  text-align: center;
-  font-size: 0.68rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: var(--text-secondary);
-  background: var(--bg-secondary);
-  border-bottom: 1px solid var(--border-secondary);
-}
-
-.day-body {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-  padding: 7px 6px;
-  min-height: 96px;
-}
-
-.time-chip {
-  display: block;
+.docente {
   width: 100%;
-  padding: 5px 4px;
-  border-radius: 7px;
-  background: var(--teal-light);
-  color: var(--teal);
-  font-size: 0.62rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0.6rem 0.7rem;
+  margin-bottom: 6px;
+  border-radius: 12px;
+  border: 1.5px solid transparent;
+  background: transparent;
+  color: inherit;
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-align: left;
+  transition: background 0.2s ease, border-color 0.2s ease, transform 0.1s ease;
+}
+
+.docente:active {
+  transform: scale(0.98);
+}
+
+.avatar-chico {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  background: #1d6fb8;
+  color: #ffffff;
+  font-size: 0.8rem;
   font-weight: 700;
-  text-align: center;
-  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.no-blocks {
-  margin: auto 0;
-  text-align: center;
-  font-size: 0.6rem;
-  color: var(--text-muted);
+.resumen {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1.2rem;
 }
 
-.placeholder-card {
+.avatar {
+  width: 58px;
+  height: 58px;
+  border-radius: 16px;
+  background: #1d6fb8;
+  color: #ffffff;
+  font-weight: 800;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 14px rgba(29, 111, 184, 0.3);
+}
+
+.resumen-nombre {
+  font-size: 1.35rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+
+.mini {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  padding: 3.5rem 1.5rem;
-  text-align: center;
 }
 
-.placeholder-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 56px;
-  height: 56px;
-  border-radius: 16px;
-  background: var(--bg-tertiary);
-  color: var(--text-tertiary);
+.mini-valor {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: #1d6fb8;
+}
+
+.mini-nombre {
+  font-size: 0.75rem;
+}
+
+.aviso-grilla {
+  text-align: center;
+  font-size: 0.88rem;
   margin-bottom: 1rem;
 }
 
-.placeholder-card h3 {
-  font-size: 1rem;
+.contenedor-grilla {
+  overflow-x: auto;
+}
+
+.cuadricula {
+  display: flex;
+  gap: 6px;
+  min-width: 520px;
+}
+
+.columna-horas {
+  width: 40px;
+}
+
+.cabeza-hueca {
+  height: 36px;
+}
+
+.hora-etiqueta {
+  height: 44px;
+  font-size: 0.68rem;
+  text-align: right;
+  padding-right: 6px;
+  transform: translateY(-7px);
+}
+
+.dia {
+  flex: 1;
+  overflow: hidden;
+}
+
+.dia-nombre {
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-weight: 700;
-  margin-bottom: 0.3rem;
+  font-size: 0.8rem;
 }
 
-.placeholder-card p {
-  font-size: 0.85rem;
-  color: var(--text-tertiary);
+.dia-cuerpo {
+  position: relative;
 }
 
-@media (max-width: 720px) {
-  .page-head {
-    flex-direction: column;
-  }
+.celda-hora {
+  height: 44px;
+}
 
-  .docente-resumen {
-    flex-wrap: wrap;
-  }
-
-  .docente-stats {
-    width: 100%;
-    justify-content: space-between;
-  }
+.bloque {
+  position: absolute;
+  left: 4px;
+  right: 4px;
+  border-radius: 8px;
+  padding: 3px 5px;
+  font-size: 0.68rem;
+  font-weight: 600;
+  overflow: hidden;
+  text-align: center;
 }
