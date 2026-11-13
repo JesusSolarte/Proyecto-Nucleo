@@ -153,10 +153,19 @@ public class BloqueDisponibilidadService implements CRUDoperation<BloqueDisponib
 				continue;
 			}
 			if (inicio.isBefore(existente.getHoraFin()) && fin.isAfter(existente.getHoraInicio())) {
-				throw new CruceHorarioException("El bloque se cruza con otro ya registrado el " + dia.getNombre()
-						+ " de " + existente.getHoraInicio() + " a " + existente.getHoraFin() + ".");
+				throw new CruceHorarioException("El bloque se cruza con otro ya registrado: "
+						+ dia.getNombre().toLowerCase() + " " + formatearHora(existente.getHoraInicio()) + "–"
+						+ formatearHora(existente.getHoraFin()) + ".");
 			}
 		}
+	}
+
+	private String formatearHora(LocalTime hora) {
+		String minutos = String.valueOf(hora.getMinute());
+		if (hora.getMinute() < 10) {
+			minutos = "0" + minutos;
+		}
+		return hora.getHour() + ":" + minutos;
 	}
 
 }
