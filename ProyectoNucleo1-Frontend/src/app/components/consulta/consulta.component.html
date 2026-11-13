@@ -2,82 +2,131 @@
   <header class="d-flex flex-wrap justify-content-between align-items-end gap-3 mb-4 animate__animated animate__fadeInDown">
     <div>
       <h1 class="titulo-pagina">Consulta de disponibilidad</h1>
-      <p class="subtitulo-pagina">Selecciona un docente para ver su horario semanal.</p>
+      <p class="subtitulo-pagina">Busca un docente para ver su horario semanal. No necesitas iniciar sesión.</p>
     </div>
     <span class="etiqueta etiqueta-turquesa">Consulta pública</span>
   </header>
 
   <div class="aviso aviso-error animate__animated animate__headShake" *ngIf="error">{{ error }}</div>
 
-  <section class="vidrio panel mb-4 animate__animated animate__fadeInUp">
-    <label class="form-label" for="docente">Docente</label>
-    <select
-      id="docente"
-      class="form-select"
-      name="docente"
-      [(ngModel)]="idSeleccionado"
-      (ngModelChange)="seleccionar($event)">
-      <option [ngValue]="null">— Seleccione un docente —</option>
-      <option *ngFor="let docente of docentes" [ngValue]="docente.id">
-        {{ docente.nombre }} {{ docente.apellido }}
-      </option>
-    </select>
+  <div class="row g-4">
+    <div class="col-lg-4 animate__animated animate__fadeInLeft">
+      <aside class="vidrio panel lista">
+        <label class="form-label" for="buscar">Buscar docente</label>
+        <input
+          id="buscar"
+          class="form-control mb-3"
+          type="text"
+          name="busqueda"
+          placeholder="Escribe un nombre o apellido"
+          [(ngModel)]="busqueda">
 
-    <div class="vacio" *ngIf="cargandoDocentes">
-      <span class="spinner-border spinner-border-sm"></span> Cargando docentes...
+        <div class="vacio" *ngIf="cargandoDocentes">
+          <span class="spinner-border spinner-border-sm"></span> Cargando docentes...
+        </div>
+        <div class="vacio" *ngIf="!cargandoDocentes && docentes.length === 0">
+          Todavía no hay docentes registrados.
+        </div>
+        <div class="vacio" *ngIf="!cargandoDocentes && docentes.length > 0 && docentesFiltrados.length === 0">
+          Ningún docente coincide con "{{ busqueda }}".
+        </div>
+
+        <button
+          type="button"
+          class="docente"
+          *ngFor="let docente of docentesFiltrados"
+          [class.elegido]="docente.id === idSeleccionado"
+          (click)="seleccionar(docente.id)">
+          <span class="avatar-chico">{{ docente.nombre.charAt(0) }}{{ docente.apellido.charAt(0) }}</span>
+          <span>{{ docente.nombre }} {{ docente.apellido }}</span>
+        </button>
+      </aside>
     </div>
-    <div class="vacio" *ngIf="!cargandoDocentes && docentes.length === 0">
-      Todavía no hay docentes registrados.
-    </div>
-    <p class="nota texto-tenue" *ngIf="!cargandoDocentes && docentes.length > 0">Esta consulta no requiere iniciar sesión.</p>
-  </section>
 
-  <ng-container *ngIf="docenteSeleccionado as docente">
-    <section class="vidrio panel mb-4 resumen animate__animated animate__fadeIn">
-      <div class="avatar">{{ docente.nombre.charAt(0) }}{{ docente.apellido.charAt(0) }}</div>
-      <h2 class="resumen-nombre">{{ docente.nombre }} {{ docente.apellido }}</h2>
-      <div class="d-flex gap-4 ms-md-auto">
-        <div class="mini">
-          <span class="mini-valor">{{ bloques.length }}</span>
-          <span class="mini-nombre texto-tenue">Bloques</span>
-        </div>
-        <div class="mini">
-          <span class="mini-valor">{{ diasConDisponibilidad }}</span>
-          <span class="mini-nombre texto-tenue">Días</span>
-        </div>
-        <div class="mini">
-          <span class="mini-valor">{{ horasSemanales }}</span>
-          <span class="mini-nombre texto-tenue">Por semana</span>
-        </div>
-      </div>
-    </section>
-
-    <section class="vidrio panel animate__animated animate__fadeInUp">
-      <div class="d-flex justify-content-between align-items-center mb-3">
-        <h2 class="titulo-seccion">Disponibilidad semanal</h2>
-        <span class="etiqueta">{{ bloques.length }} bloques</span>
-      </div>
-
-      <div class="vacio" *ngIf="cargandoBloques">
-        <span class="spinner-border spinner-border-sm"></span> Cargando disponibilidad...
-      </div>
-
-      <div class="semana" *ngIf="!cargandoBloques">
-        <div class="dia columna-dia" *ngFor="let col of calendario">
-          <div class="dia-nombre cabeza-dia">{{ col.etiqueta }}</div>
-          <div class="dia-cuerpo">
-            <span class="bloque bloque-turquesa hora" *ngFor="let b of col.bloques">
-              {{ horaCorta(b.horaInicio) }}<br>{{ horaCorta(b.horaFin) }}
-            </span>
-            <span class="libre" *ngIf="col.bloques.length === 0">Sin disponibilidad</span>
+    <div class="col-lg-8">
+      <ng-container *ngIf="docenteSeleccionado as docente">
+        <section class="vidrio panel mb-4 resumen animate__animated animate__fadeIn">
+          <div class="avatar">{{ docente.nombre.charAt(0) }}{{ docente.apellido.charAt(0) }}</div>
+          <h2 class="resumen-nombre">{{ docente.nombre }} {{ docente.apellido }}</h2>
+          <div class="d-flex gap-4 ms-md-auto">
+            <div class="mini">
+              <span class="mini-valor">{{ bloques.length }}</span>
+              <span class="mini-nombre texto-tenue">Bloques</span>
+            </div>
+            <div class="mini">
+              <span class="mini-valor">{{ diasConDisponibilidad }}</span>
+              <span class="mini-nombre texto-tenue">Días</span>
+            </div>
+            <div class="mini">
+              <span class="mini-valor">{{ horasSemanales }}</span>
+              <span class="mini-nombre texto-tenue">Por semana</span>
+            </div>
           </div>
-        </div>
-      </div>
-    </section>
-  </ng-container>
+        </section>
 
-  <section class="vidrio panel vacio" *ngIf="!docenteSeleccionado && !cargandoDocentes && docentes.length > 0">
-    <h3 class="titulo-seccion mb-2">Selecciona un docente</h3>
-    <p class="mb-0">Su disponibilidad semanal aparecerá aquí.</p>
-  </section>
+        <section class="vidrio panel mb-4 animate__animated animate__fadeInUp">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h2 class="titulo-seccion">Disponibilidad semanal</h2>
+            <span class="etiqueta">{{ bloques.length }} bloques</span>
+          </div>
+
+          <div class="vacio" *ngIf="cargandoBloques">
+            <span class="spinner-border spinner-border-sm"></span> Cargando disponibilidad...
+          </div>
+
+          <div class="aviso-grilla texto-tenue" *ngIf="!cargandoBloques && bloques.length === 0">
+            Este docente todavía no ha registrado bloques de disponibilidad.
+          </div>
+
+          <div class="contenedor-grilla" *ngIf="!cargandoBloques">
+            <div class="cuadricula">
+              <div class="columna-horas">
+                <div class="cabeza-hueca"></div>
+                <div class="hora-etiqueta texto-tenue hora" *ngFor="let h of horas">{{ h }}:00</div>
+              </div>
+              <div class="columna-dia dia" *ngFor="let col of calendario">
+                <div class="cabeza-dia dia-nombre">{{ col.etiqueta }}</div>
+                <div class="dia-cuerpo">
+                  <div class="celda-hora" *ngFor="let h of horas"></div>
+                  <span
+                    class="bloque bloque-turquesa hora"
+                    *ngFor="let b of col.bloques"
+                    [ngStyle]="{ 'top.px': arriba(b), 'height.px': alto(b) }">
+                    {{ horaCorta(b.horaInicio) }} – {{ horaCorta(b.horaFin) }}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="vidrio panel animate__animated animate__fadeInUp" *ngIf="!cargandoBloques && bloques.length > 0">
+          <h2 class="titulo-seccion mb-3">Bloques ordenados por día y hora</h2>
+          <div class="table-responsive">
+            <table class="table tabla">
+              <thead>
+                <tr>
+                  <th>Día</th>
+                  <th>Inicio</th>
+                  <th>Fin</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let b of bloquesOrdenados">
+                  <td><span class="etiqueta etiqueta-turquesa">{{ etiquetaDia(b.diaSemana) }}</span></td>
+                  <td class="hora">{{ horaCorta(b.horaInicio) }}</td>
+                  <td class="hora">{{ horaCorta(b.horaFin) }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </ng-container>
+
+      <section class="vidrio panel vacio animate__animated animate__fadeIn" *ngIf="!docenteSeleccionado">
+        <h3 class="titulo-seccion mb-2">Selecciona un docente</h3>
+        <p class="mb-0">Su disponibilidad semanal aparecerá aquí.</p>
+      </section>
+    </div>
+  </div>
 </section>

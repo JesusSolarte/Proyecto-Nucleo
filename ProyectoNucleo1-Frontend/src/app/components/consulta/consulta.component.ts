@@ -12,6 +12,8 @@ interface ColumnaDia {
   bloques: BloqueDisponibilidadDTO[];
 }
 
+const ALTO_HORA = 44;
+
 @Component({
   selector: 'consulta',
   templateUrl: './consulta.component.html',
@@ -22,6 +24,7 @@ export class ConsultaComponent implements OnInit {
   readonly dias = DIAS_SEMANA;
 
   docentes: UsuarioDTO[] = [];
+  busqueda = '';
   idSeleccionado: number | null = null;
   bloques: BloqueDisponibilidadDTO[] = [];
 
@@ -38,6 +41,14 @@ export class ConsultaComponent implements OnInit {
     this.cargarDocentes();
   }
 
+  get docentesFiltrados(): UsuarioDTO[] {
+    const texto = this.busqueda.trim().toLowerCase();
+    return this.docentes.filter(docente => {
+      const nombreCompleto = (docente.nombre + ' ' + docente.apellido).toLowerCase();
+      return nombreCompleto.includes(texto);
+    });
+  }
+
   get docenteSeleccionado(): UsuarioDTO | undefined {
     return this.docentes.find(docente => docente.id === this.idSeleccionado);
   }
@@ -46,10 +57,33 @@ export class ConsultaComponent implements OnInit {
     return DIAS_SEMANA.map(dia => ({
       dia: dia.valor,
       etiqueta: dia.etiqueta,
-      bloques: this.bloques
-        .filter(bloque => bloque.diaSemana === dia.valor)
-        .sort((a, b) => a.horaInicio.localeCompare(b.horaInicio))
+      bloques: this.bloques.filter(bloque => bloque.diaSemana === dia.valor)
     }));
+  }
+
+  get bloquesOrdenados(): BloqueDisponibilidadDTO[] {
+    const orden = DIAS_SEMANA.map(dia => dia.valor);
+    return [...this.bloques].sort((a, b) => {
+      const porDia = orden.indexOf(a.diaSemana) - orden.indexOf(b.diaSemana);
+      if (porDia !== 0) {
+        return porDia;
+      }
+      return a.horaInicio.localeCompare(b.horaInicio);
+    });
+  }
+
+  get horas(): number[] {
+    let primera = 6;
+    let ultima = 22;
+    for (const bloque of this.bloques) {
+      primera = Math.min(primera, Math.floor(this.aMinutos(bloque.horaInicio) / 60));
+      ultima = Math.max(ultima, Math.ceil(this.aMinutos(bloque.horaFin) / 60));
+    }
+    const lista: number[] = [];
+    for (let hora = primera; hora < ultima; hora++) {
+      lista.push(hora);
+    }
+    return lista;
   }
 
   get diasConDisponibilidad(): number {
@@ -58,7 +92,7 @@ export class ConsultaComponent implements OnInit {
 
   get horasSemanales(): string {
     const minutos = this.bloques.reduce((total, bloque) => {
-      return total + this.diferenciaMinutos(bloque.horaInicio, bloque.horaFin);
+      return total + this.aMinutos(bloque.horaFin) - this.aMinutos(bloque.horaInicio);
     }, 0);
     const horas = Math.floor(minutos / 60);
     const resto = minutos % 60;
@@ -81,15 +115,14 @@ export class ConsultaComponent implements OnInit {
     });
   }
 
-  seleccionar(id: number | null): void {
-    this.idSeleccionado = id;
-    this.bloques = [];
-    this.error = '';
-
-    if (id === null || id === undefined) {
+  seleccionar(id: number | undefined): void {
+    if (id === undefined) {
       return;
     }
 
+    this.idSeleccionado = id;
+    this.bloques = [];
+    this.error = '';
     this.cargandoBloques = true;
 
     this.disponibilidad.consultarDocente(id).subscribe({
@@ -104,16 +137,27 @@ export class ConsultaComponent implements OnInit {
     });
   }
 
+  arriba(bloque: BloqueDisponibilidadDTO): number {
+    const minutosDesdeInicio = this.aMinutos(bloque.horaInicio) - this.horas[0] * 60;
+    return minutosDesdeInicio / 60 * ALTO_HORA;
+  }
+
+  alto(bloque: BloqueDisponibilidadDTO): number {
+    const duracion = this.aMinutos(bloque.horaFin) - this.aMinutos(bloque.horaInicio);
+    return duracion / 60 * ALTO_HORA;
+  }
+
   horaCorta(hora: string): string {
     return hora.substring(0, 5);
   }
 
-  private diferenciaMinutos(inicio: string, fin: string): number {
-    return this.aMinutos(fin) - this.aMinutos(inicio);
+  etiquetaDia(dia: DiaSemana): string {
+    const encontrado = DIAS_SEMANA.find(item => item.valor === dia);
+    return encontrado ? encontrado.etiqueta : dia;
   }
 
   private aMinutos(hora: string): number {
-    const [horas, minutos] = hora.split(':').map(Number);
-    return horas * 60 + minutos;
+    const partes = hora.split(':');
+    return Number(partes[0]) * 60 + Number(partes[1]);
   }
 }

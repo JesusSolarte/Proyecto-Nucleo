@@ -273,6 +273,34 @@ a:hover {
   font-size: 0.9rem;
 }
 
+.celda-hora {
+  border-bottom: 1px solid #e6edf4;
+}
+
+.docente:hover {
+  background: rgba(29, 111, 184, 0.06);
+}
+
+.docente.elegido {
+  background: #e8f2fb;
+  border-color: rgba(29, 111, 184, 0.35);
+  color: #1d6fb8;
+}
+
+body.dark-mode .celda-hora {
+  border-color: #1d2f44;
+}
+
+body.dark-mode .docente:hover {
+  background: rgba(79, 159, 224, 0.08);
+}
+
+body.dark-mode .docente.elegido {
+  background: #17324b;
+  border-color: rgba(79, 159, 224, 0.4);
+  color: #4f9fe0;
+}
+
 .marca,
 .enlace {
   color: #10233f;

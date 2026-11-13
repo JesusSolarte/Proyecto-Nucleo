@@ -24,7 +24,7 @@
           <input id="nombre" class="form-control" type="text" formControlName="nombre" placeholder="Laura"
                  [class.invalido]="form.get('nombre')?.invalid && form.get('nombre')?.touched">
           <span class="error-campo" *ngIf="form.get('nombre')?.invalid && form.get('nombre')?.touched">
-            Ingresa un nombre válido.
+            Entre 2 y 60 letras.
           </span>
         </div>
         <div class="col-md-6">
@@ -32,7 +32,7 @@
           <input id="apellido" class="form-control" type="text" formControlName="apellido" placeholder="Soto"
                  [class.invalido]="form.get('apellido')?.invalid && form.get('apellido')?.touched">
           <span class="error-campo" *ngIf="form.get('apellido')?.invalid && form.get('apellido')?.touched">
-            Ingresa un apellido válido.
+            Entre 2 y 60 letras.
           </span>
         </div>
       </div>
@@ -56,11 +56,11 @@
           </span>
         </div>
         <div class="col-md-6">
-          <label class="form-label" for="telefono">Teléfono</label>
+          <label class="form-label" for="telefono">Teléfono <span class="texto-tenue">(opcional)</span></label>
           <input id="telefono" class="form-control" type="tel" formControlName="telefono" placeholder="3001234567"
                  [class.invalido]="form.get('telefono')?.invalid && form.get('telefono')?.touched">
           <span class="error-campo" *ngIf="form.get('telefono')?.invalid && form.get('telefono')?.touched">
-            Entre 7 y 15 dígitos.
+            Si lo escribes, entre 7 y 15 dígitos.
           </span>
         </div>
       </div>

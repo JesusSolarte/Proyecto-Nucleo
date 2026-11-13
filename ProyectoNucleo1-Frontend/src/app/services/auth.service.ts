@@ -35,7 +35,24 @@ export class AuthService {
   }
 
   isLoggedIn(): boolean {
-    return !!localStorage.getItem(CLAVE_TOKEN) && !!this.userSubject.value;
+    const token = localStorage.getItem(CLAVE_TOKEN);
+    if (!token || !this.userSubject.value) {
+      return false;
+    }
+    if (this.tokenVencido(token)) {
+      this.limpiarSesion();
+      return false;
+    }
+    return true;
+  }
+
+  tokenVencido(token: string): boolean {
+    try {
+      const datos = JSON.parse(atob(token.split('.')[1]));
+      return datos.exp * 1000 < Date.now();
+    } catch {
+      return true;
+    }
   }
 
   isAdmin(): boolean {

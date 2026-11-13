@@ -8,7 +8,6 @@
   </header>
 
   <div class="aviso aviso-error animate__animated animate__headShake" *ngIf="error">{{ error }}</div>
-  <div class="aviso aviso-exito animate__animated animate__fadeIn" *ngIf="exito">{{ exito }}</div>
 
   <div class="row g-3 mb-4">
     <div class="col-md-4 animate__animated animate__fadeInUp">
@@ -80,14 +79,30 @@
           <span class="etiqueta etiqueta-turquesa">Semana tipo</span>
         </div>
 
-        <div class="semana">
-          <div class="dia columna-dia" *ngFor="let col of calendario">
-            <div class="dia-nombre cabeza-dia">{{ col.etiqueta }}</div>
-            <div class="dia-cuerpo">
-              <button type="button" class="bloque bloque-hora hora" *ngFor="let b of col.bloques" (click)="editar(b)" title="Editar bloque">
-                {{ horaCorta(b.horaInicio) }}<br>{{ horaCorta(b.horaFin) }}
-              </button>
-              <span class="libre" *ngIf="col.bloques.length === 0">Libre</span>
+        <div class="aviso-grilla texto-tenue" *ngIf="!cargando && bloques.length === 0">
+          Aún no tienes bloques. Registra el primero con el formulario de la izquierda.
+        </div>
+
+        <div class="contenedor-grilla">
+          <div class="cuadricula">
+            <div class="columna-horas">
+              <div class="cabeza-hueca"></div>
+              <div class="hora-etiqueta texto-tenue hora" *ngFor="let h of horas">{{ h }}:00</div>
+            </div>
+            <div class="columna-dia dia" *ngFor="let col of calendario">
+              <div class="cabeza-dia dia-nombre">{{ col.etiqueta }}</div>
+              <div class="dia-cuerpo">
+                <div class="celda-hora" *ngFor="let h of horas"></div>
+                <button
+                  type="button"
+                  class="bloque bloque-hora hora"
+                  *ngFor="let b of col.bloques"
+                  [ngStyle]="{ 'top.px': arriba(b), 'height.px': alto(b) }"
+                  (click)="editar(b)"
+                  title="Editar bloque">
+                  {{ horaCorta(b.horaInicio) }} – {{ horaCorta(b.horaFin) }}
+                </button>
+              </div>
             </div>
           </div>
         </div>

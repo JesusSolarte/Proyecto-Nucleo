@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import Swal from 'sweetalert2';
 
 import { DisponibilidadService } from '../../services/disponibilidad.service';
 import { ErrorHandlerService } from '../../services/error-handler.service';
@@ -12,6 +13,8 @@ interface ColumnaDia {
   etiqueta: string;
   bloques: BloqueDisponibilidadDTO[];
 }
+
+const ALTO_HORA = 44;
 
 @Component({
   selector: 'dashboard',
@@ -26,7 +29,6 @@ export class DashboardComponent implements OnInit {
   cargando = true;
   guardando = false;
   error = '';
-  exito = '';
   editandoId: number | null = null;
 
   form: FormGroup;
@@ -52,18 +54,33 @@ export class DashboardComponent implements OnInit {
     return DIAS_SEMANA.map(dia => ({
       dia: dia.valor,
       etiqueta: dia.etiqueta,
-      bloques: this.bloques
-        .filter(bloque => bloque.diaSemana === dia.valor)
-        .sort((a, b) => a.horaInicio.localeCompare(b.horaInicio))
+      bloques: this.bloques.filter(bloque => bloque.diaSemana === dia.valor)
     }));
   }
 
   get bloquesOrdenados(): BloqueDisponibilidadDTO[] {
-    const orden = new Map(DIAS_SEMANA.map((dia, indice) => [dia.valor, indice]));
+    const orden = DIAS_SEMANA.map(dia => dia.valor);
     return [...this.bloques].sort((a, b) => {
-      const porDia = (orden.get(a.diaSemana) ?? 0) - (orden.get(b.diaSemana) ?? 0);
-      return porDia !== 0 ? porDia : a.horaInicio.localeCompare(b.horaInicio);
+      const porDia = orden.indexOf(a.diaSemana) - orden.indexOf(b.diaSemana);
+      if (porDia !== 0) {
+        return porDia;
+      }
+      return a.horaInicio.localeCompare(b.horaInicio);
     });
+  }
+
+  get horas(): number[] {
+    let primera = 6;
+    let ultima = 22;
+    for (const bloque of this.bloques) {
+      primera = Math.min(primera, Math.floor(this.aMinutos(bloque.horaInicio) / 60));
+      ultima = Math.max(ultima, Math.ceil(this.aMinutos(bloque.horaFin) / 60));
+    }
+    const lista: number[] = [];
+    for (let hora = primera; hora < ultima; hora++) {
+      lista.push(hora);
+    }
+    return lista;
   }
 
   get diasConDisponibilidad(): number {
@@ -72,7 +89,7 @@ export class DashboardComponent implements OnInit {
 
   get horasSemanales(): string {
     const minutos = this.bloques.reduce((total, bloque) => {
-      return total + this.diferenciaMinutos(bloque.horaInicio, bloque.horaFin);
+      return total + this.aMinutos(bloque.horaFin) - this.aMinutos(bloque.horaInicio);
     }, 0);
     const horas = Math.floor(minutos / 60);
     const resto = minutos % 60;
@@ -100,8 +117,6 @@ export class DashboardComponent implements OnInit {
       return;
     }
     this.editandoId = bloque.id;
-    this.exito = '';
-    this.error = '';
     this.form.patchValue({
       diaSemana: bloque.diaSemana,
       horaInicio: this.horaCorta(bloque.horaInicio),
@@ -118,13 +133,14 @@ export class DashboardComponent implements OnInit {
   guardar(): void {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
+      Swal.fire('Faltan datos', 'Selecciona el día, la hora de inicio y la hora de fin.', 'warning');
       return;
     }
 
     const { diaSemana, horaInicio, horaFin } = this.form.value;
 
     if (horaInicio >= horaFin) {
-      this.error = 'La hora de inicio debe ser anterior a la hora de fin.';
+      Swal.fire('Rango inválido', 'La hora de inicio debe ser anterior a la hora de fin.', 'warning');
       return;
     }
 
@@ -134,9 +150,8 @@ export class DashboardComponent implements OnInit {
       horaFin
     };
 
+    const estabaEditando = this.editandoId !== null;
     this.guardando = true;
-    this.error = '';
-    this.exito = '';
 
     const peticion = this.editandoId !== null
       ? this.disponibilidad.actualizarBloque(this.editandoId, payload)
@@ -145,15 +160,18 @@ export class DashboardComponent implements OnInit {
     peticion.subscribe({
       next: () => {
         this.guardando = false;
-        this.exito = this.editandoId !== null
-          ? 'Bloque actualizado correctamente.'
-          : 'Bloque registrado correctamente.';
+        Swal.fire({
+          icon: 'success',
+          title: estabaEditando ? 'Bloque actualizado' : 'Bloque registrado',
+          timer: 1600,
+          showConfirmButton: false
+        });
         this.cancelarEdicion();
         this.cargarBloques();
       },
       error: (err) => {
         this.guardando = false;
-        this.error = this.errorHandler.extraerMensaje(err, 'No fue posible guardar el bloque.');
+        Swal.fire('No se guardó el bloque', this.errorHandler.extraerMensaje(err, 'No fue posible guardar el bloque.'), 'error');
       }
     });
   }
@@ -162,28 +180,44 @@ export class DashboardComponent implements OnInit {
     if (bloque.id === undefined) {
       return;
     }
-    const confirmado = window.confirm(
-      `¿Eliminar el bloque del ${this.etiquetaDia(bloque.diaSemana)} de ${this.horaCorta(bloque.horaInicio)} a ${this.horaCorta(bloque.horaFin)}?`
-    );
-    if (!confirmado) {
-      return;
-    }
+    const id = bloque.id;
 
-    this.error = '';
-    this.exito = '';
-
-    this.disponibilidad.eliminarBloque(bloque.id).subscribe({
-      next: () => {
-        this.exito = 'Bloque eliminado correctamente.';
-        if (this.editandoId === bloque.id) {
-          this.cancelarEdicion();
-        }
-        this.cargarBloques();
-      },
-      error: (err) => {
-        this.error = this.errorHandler.extraerMensaje(err, 'No fue posible eliminar el bloque.');
+    Swal.fire({
+      icon: 'question',
+      title: '¿Eliminar este bloque?',
+      text: `${this.etiquetaDia(bloque.diaSemana)} de ${this.horaCorta(bloque.horaInicio)} a ${this.horaCorta(bloque.horaFin)}`,
+      showCancelButton: true,
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar',
+      confirmButtonColor: '#c0392b'
+    }).then(resultado => {
+      if (!resultado.isConfirmed) {
+        return;
       }
+
+      this.disponibilidad.eliminarBloque(id).subscribe({
+        next: () => {
+          Swal.fire({ icon: 'success', title: 'Bloque eliminado', timer: 1600, showConfirmButton: false });
+          if (this.editandoId === id) {
+            this.cancelarEdicion();
+          }
+          this.cargarBloques();
+        },
+        error: (err) => {
+          Swal.fire('No se eliminó el bloque', this.errorHandler.extraerMensaje(err, 'No fue posible eliminar el bloque.'), 'error');
+        }
+      });
     });
+  }
+
+  arriba(bloque: BloqueDisponibilidadDTO): number {
+    const minutosDesdeInicio = this.aMinutos(bloque.horaInicio) - this.horas[0] * 60;
+    return minutosDesdeInicio / 60 * ALTO_HORA;
+  }
+
+  alto(bloque: BloqueDisponibilidadDTO): number {
+    const duracion = this.aMinutos(bloque.horaFin) - this.aMinutos(bloque.horaInicio);
+    return duracion / 60 * ALTO_HORA;
   }
 
   horaCorta(hora: string): string {
@@ -195,12 +229,8 @@ export class DashboardComponent implements OnInit {
     return encontrado ? encontrado.etiqueta : dia;
   }
 
-  private diferenciaMinutos(inicio: string, fin: string): number {
-    return this.aMinutos(fin) - this.aMinutos(inicio);
-  }
-
   private aMinutos(hora: string): number {
-    const [horas, minutos] = hora.split(':').map(Number);
-    return horas * 60 + minutos;
+    const partes = hora.split(':');
+    return Number(partes[0]) * 60 + Number(partes[1]);
   }
 }
