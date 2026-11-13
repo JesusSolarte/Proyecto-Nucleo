@@ -24,12 +24,12 @@
     </select>
 
     <div class="vacio" *ngIf="cargandoDocentes">
-      <span class="spinner-border spinner-border-sm me-2"></span> Cargando docentes...
+      <span class="spinner-border spinner-border-sm"></span> Cargando docentes...
     </div>
     <div class="vacio" *ngIf="!cargandoDocentes && docentes.length === 0">
       Todavía no hay docentes registrados.
     </div>
-    <p class="nota" *ngIf="!cargandoDocentes && docentes.length > 0">Esta consulta no requiere iniciar sesión.</p>
+    <p class="nota texto-tenue" *ngIf="!cargandoDocentes && docentes.length > 0">Esta consulta no requiere iniciar sesión.</p>
   </section>
 
   <ng-container *ngIf="docenteSeleccionado as docente">
@@ -39,15 +39,15 @@
       <div class="d-flex gap-4 ms-md-auto">
         <div class="mini">
           <span class="mini-valor">{{ bloques.length }}</span>
-          <span class="mini-nombre">Bloques</span>
+          <span class="mini-nombre texto-tenue">Bloques</span>
         </div>
         <div class="mini">
           <span class="mini-valor">{{ diasConDisponibilidad }}</span>
-          <span class="mini-nombre">Días</span>
+          <span class="mini-nombre texto-tenue">Días</span>
         </div>
         <div class="mini">
           <span class="mini-valor">{{ horasSemanales }}</span>
-          <span class="mini-nombre">Por semana</span>
+          <span class="mini-nombre texto-tenue">Por semana</span>
         </div>
       </div>
     </section>
@@ -59,14 +59,14 @@
       </div>
 
       <div class="vacio" *ngIf="cargandoBloques">
-        <span class="spinner-border spinner-border-sm me-2"></span> Cargando disponibilidad...
+        <span class="spinner-border spinner-border-sm"></span> Cargando disponibilidad...
       </div>
 
       <div class="semana" *ngIf="!cargandoBloques">
-        <div class="dia" *ngFor="let col of calendario">
-          <div class="dia-nombre">{{ col.etiqueta }}</div>
+        <div class="dia columna-dia" *ngFor="let col of calendario">
+          <div class="dia-nombre cabeza-dia">{{ col.etiqueta }}</div>
           <div class="dia-cuerpo">
-            <span class="bloque hora" *ngFor="let b of col.bloques">
+            <span class="bloque bloque-turquesa hora" *ngFor="let b of col.bloques">
               {{ horaCorta(b.horaInicio) }}<br>{{ horaCorta(b.horaFin) }}
             </span>
             <span class="libre" *ngIf="col.bloques.length === 0">Sin disponibilidad</span>

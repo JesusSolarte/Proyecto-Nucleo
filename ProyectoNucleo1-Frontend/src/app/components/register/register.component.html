@@ -1,8 +1,19 @@
 <section class="acceso">
-  <div class="acceso-caja vidrio animate__animated animate__zoomIn">
-    <span class="etiqueta">Disponibilidad Docente</span>
-    <h2 class="acceso-titulo">Crea tu cuenta docente</h2>
-    <p class="texto-suave mb-4">Registra tus datos para gestionar tu disponibilidad.</p>
+  <div class="acceso-caja vidrio animate__animated animate__fadeInUp">
+    <div class="acceso-marca">
+      <span class="acceso-icono">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+          <circle cx="9" cy="7" r="4"></circle>
+          <line x1="19" y1="8" x2="19" y2="14"></line>
+          <line x1="22" y1="11" x2="16" y2="11"></line>
+        </svg>
+      </span>
+      <span>Disponibilidad Docente</span>
+    </div>
+
+    <h2 class="titulo-pagina">Crea tu cuenta docente</h2>
+    <p class="subtitulo-pagina mb-4">Registra tus datos para gestionar tu disponibilidad</p>
 
     <div class="aviso aviso-error animate__animated animate__headShake" *ngIf="error">{{ error }}</div>
 
@@ -75,13 +86,13 @@
         </div>
       </div>
 
-      <button type="submit" class="btn btn-ambar w-100" [disabled]="cargando">
-        <span class="spinner-border spinner-border-sm me-2" *ngIf="cargando"></span>
+      <button type="submit" class="btn-azul w-100" [disabled]="cargando">
+        <span class="spinner-border spinner-border-sm" *ngIf="cargando"></span>
         {{ cargando ? 'Creando cuenta...' : 'Crear cuenta' }}
       </button>
     </form>
 
-    <p class="acceso-pie">
+    <p class="acceso-pie texto-tenue">
       ¿Ya tienes cuenta? <a routerLink="/login">Inicia sesión</a>
     </p>
   </div>

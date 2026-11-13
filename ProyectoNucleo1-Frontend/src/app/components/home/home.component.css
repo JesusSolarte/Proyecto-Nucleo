@@ -1,125 +1,130 @@
 .portada {
-  min-height: 70vh;
+  min-height: 62vh;
 }
 
 .titulo-portada {
-  font-size: 4.2rem;
+  font-size: 3.2rem;
   font-weight: 800;
-  line-height: 1;
-  margin: 1.2rem 0;
+  letter-spacing: -0.035em;
+  line-height: 1.08;
+  margin: 1.1rem 0;
 }
 
 .resaltado {
-  color: #ffc857;
+  display: block;
+  color: #1d6fb8;
 }
 
 .texto-portada {
-  font-size: 1.15rem;
-  color: rgba(244, 241, 234, 0.75);
-  max-width: 520px;
+  font-size: 1.05rem;
+  line-height: 1.65;
+  max-width: 540px;
   margin-bottom: 2rem;
 }
 
 .semana {
-  padding: 1.6rem;
+  padding: 1.5rem;
 }
 
-.semana-fila {
+.punto-azul {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #1d6fb8;
+}
+
+.semana-grilla {
   display: flex;
-  align-items: center;
-  gap: 14px;
-  padding: 0.7rem 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  gap: 6px;
 }
 
 .semana-dia {
-  width: 42px;
-  font-weight: 700;
-  color: rgba(244, 241, 234, 0.7);
+  flex: 1;
+  min-height: 130px;
+  padding: 0.5rem 0.25rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.75rem;
+  font-weight: 600;
 }
 
-.semana-bloque {
-  padding: 0.35rem 0.8rem;
-  border-radius: 10px;
-  font-size: 0.85rem;
-  font-weight: 700;
-  color: #0d1b2a;
-}
-
-.bloque-ambar {
-  background: #ffc857;
-}
-
-.bloque-turquesa {
-  background: #2ec4b6;
-}
-
-.bloque-coral {
-  background: #ff7a59;
-}
-
-.semana-libre {
-  color: rgba(244, 241, 234, 0.4);
-  font-size: 0.85rem;
+.semana-dia i {
+  font-style: normal;
+  font-size: 0.65rem;
+  font-weight: 600;
+  padding: 4px 3px;
+  border-radius: 6px;
 }
 
 .semana-pie {
-  display: flex;
-  align-items: center;
   gap: 8px;
   margin-top: 1rem;
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: #6fe3d6;
+  padding: 6px 12px;
 }
 
-.punto {
-  width: 9px;
-  height: 9px;
+.punto-verde {
+  width: 8px;
+  height: 8px;
   border-radius: 50%;
-  background: #2ec4b6;
-  box-shadow: 0 0 10px #2ec4b6;
-}
-
-.flotar {
-  animation: flotar 6s ease-in-out infinite;
-}
-
-@keyframes flotar {
-  0% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-12px);
-  }
-  100% {
-    transform: translateY(0);
-  }
+  background: #0f8f82;
 }
 
 .tarjeta {
-  padding: 1.8rem;
   height: 100%;
+  padding: 1.6rem;
+  transition: transform 0.25s ease;
+}
+
+.tarjeta:hover {
+  transform: translateY(-4px);
 }
 
 .tarjeta h3 {
-  font-size: 1.3rem;
+  font-size: 1.05rem;
   font-weight: 700;
-  margin: 0.8rem 0 0.5rem;
+  margin: 1rem 0 0.4rem;
 }
 
 .tarjeta p {
+  font-size: 0.9rem;
   margin: 0;
 }
 
-.tarjeta-numero {
-  font-family: 'JetBrains Mono', monospace;
+.pasos {
+  padding: 2rem;
+}
+
+.paso {
+  text-align: center;
+}
+
+.paso-numero {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #1d6fb8;
+  color: #ffffff;
   font-weight: 700;
-  color: #ffc857;
+  margin-bottom: 0.7rem;
+}
+
+.paso h4 {
+  font-size: 0.98rem;
+  font-weight: 700;
+}
+
+.paso p {
+  font-size: 0.85rem;
+  margin: 0;
 }
 
 @media (max-width: 768px) {
   .titulo-portada {
-    font-size: 2.8rem;
+    font-size: 2.2rem;
   }
 }

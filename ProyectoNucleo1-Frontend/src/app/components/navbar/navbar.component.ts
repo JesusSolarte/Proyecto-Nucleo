@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { AuthService } from '../../services/auth.service';
+import { ThemeService } from '../../services/theme.service';
 
 @Component({
   selector: 'navbar',
@@ -14,7 +15,8 @@ export class NavbarComponent {
 
   constructor(
     public auth: AuthService,
-    private router: Router
+    private router: Router,
+    public theme: ThemeService
   ) {}
 
   logout(): void {

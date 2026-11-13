@@ -2,111 +2,95 @@
   position: sticky;
   top: 12px;
   z-index: 50;
-  max-width: 1200px;
+  max-width: 1180px;
   margin: 12px auto 0;
-  padding: 0.7rem 1.2rem;
+  padding: 0.6rem 1rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-radius: 18px;
+  border-radius: 16px;
 }
 
 .marca {
   display: flex;
   align-items: center;
   gap: 10px;
-  color: #f4f1ea;
-}
-
-.marca:hover {
-  color: #ffffff;
 }
 
 .marca-icono {
-  width: 40px;
-  height: 40px;
+  width: 42px;
+  height: 42px;
   border-radius: 12px;
-  background: #ffc857;
-  color: #0d1b2a;
+  background: #1d6fb8;
+  color: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
+  box-shadow: 0 4px 14px rgba(29, 111, 184, 0.3);
 }
 
 .marca-texto {
-  font-family: 'Bricolage Grotesque', sans-serif;
-  font-size: 1.1rem;
-  font-weight: 500;
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
 }
 
-.marca-texto b {
+.marca-nombre {
   font-weight: 800;
-  color: #ffc857;
+  font-size: 1rem;
+  letter-spacing: -0.02em;
 }
 
-.enlaces {
-  gap: 6px;
+.marca-sub {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.6;
 }
 
 .enlace {
-  color: rgba(244, 241, 234, 0.75);
+  padding: 0.5rem 0.9rem;
+  border-radius: 10px;
+  font-size: 0.9rem;
   font-weight: 600;
-  padding: 0.45rem 0.9rem;
-  border-radius: 12px;
-  transition: background 0.2s, color 0.2s;
+  transition: background 0.2s ease, color 0.2s ease;
 }
 
-.enlace:hover {
-  color: #ffffff;
-  background: rgba(255, 255, 255, 0.1);
-}
-
-.activo {
-  color: #0d1b2a;
-  background: #f4f1ea;
-}
-
-.activo:hover {
-  color: #0d1b2a;
-  background: #ffffff;
+.tema {
+  padding: 0.55rem;
 }
 
 .usuario {
-  display: flex;
-  align-items: center;
   gap: 8px;
-  font-weight: 600;
-  font-size: 0.9rem;
-  padding: 0 0.5rem;
+  padding: 6px 12px;
+  font-size: 0.8rem;
 }
 
 .punto {
-  width: 9px;
-  height: 9px;
+  width: 8px;
+  height: 8px;
   border-radius: 50%;
-  background: #2ec4b6;
-  box-shadow: 0 0 10px #2ec4b6;
+  background: #0f8f5f;
 }
 
 .hamburguesa {
-  background: transparent;
-  border: none;
-  display: flex;
   flex-direction: column;
-  gap: 5px;
-  padding: 6px;
+  gap: 4px;
+  padding: 0.6rem;
 }
 
 .hamburguesa span {
-  width: 24px;
+  display: block;
+  width: 18px;
   height: 2px;
-  background: #f4f1ea;
   border-radius: 2px;
+  background: currentColor;
 }
 
 .menu-movil {
   position: sticky;
-  top: 86px;
+  top: 84px;
   z-index: 49;
   margin: 10px 1rem 0;
   padding: 1rem;

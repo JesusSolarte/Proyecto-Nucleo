@@ -1,8 +1,21 @@
 <section class="acceso">
-  <div class="acceso-caja vidrio animate__animated animate__zoomIn">
-    <span class="etiqueta">Disponibilidad Docente</span>
-    <h2 class="acceso-titulo">Bienvenido de vuelta</h2>
-    <p class="texto-suave mb-4">Inicia sesión para gestionar tus bloques horarios.</p>
+  <div class="acceso-caja vidrio animate__animated animate__fadeInUp">
+    <div class="acceso-marca">
+      <span class="acceso-icono">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="4" width="18" height="17" rx="3"></rect>
+          <line x1="3" y1="9" x2="21" y2="9"></line>
+          <line x1="8" y1="2" x2="8" y2="6"></line>
+          <line x1="16" y1="2" x2="16" y2="6"></line>
+          <circle cx="12" cy="15" r="3"></circle>
+          <path d="M12 13.5V15l1 1"></path>
+        </svg>
+      </span>
+      <span>Disponibilidad Docente</span>
+    </div>
+
+    <h2 class="titulo-pagina">Bienvenido de vuelta</h2>
+    <p class="subtitulo-pagina mb-4">Inicia sesión para gestionar tus bloques horarios</p>
 
     <div class="aviso aviso-error animate__animated animate__headShake" *ngIf="error">{{ error }}</div>
 
@@ -33,7 +46,7 @@
             placeholder="••••••••"
             autocomplete="current-password"
             [class.invalido]="form.get('contrasena')?.invalid && form.get('contrasena')?.touched">
-          <button type="button" class="btn btn-vidrio" (click)="toggleContrasena()">
+          <button type="button" class="btn-borde" (click)="toggleContrasena()">
             {{ mostrarContrasena ? 'Ocultar' : 'Ver' }}
           </button>
         </div>
@@ -42,13 +55,13 @@
         </span>
       </div>
 
-      <button type="submit" class="btn btn-ambar w-100" [disabled]="form.invalid || cargando">
-        <span class="spinner-border spinner-border-sm me-2" *ngIf="cargando"></span>
+      <button type="submit" class="btn-azul w-100" [disabled]="form.invalid || cargando">
+        <span class="spinner-border spinner-border-sm" *ngIf="cargando"></span>
         {{ cargando ? 'Entrando...' : 'Iniciar sesión' }}
       </button>
     </form>
 
-    <p class="acceso-pie">
+    <p class="acceso-pie texto-tenue">
       ¿No tienes cuenta? <a routerLink="/register">Regístrate</a>
     </p>
   </div>

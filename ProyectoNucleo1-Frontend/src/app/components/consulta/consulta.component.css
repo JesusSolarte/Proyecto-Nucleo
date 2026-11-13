@@ -5,7 +5,6 @@
 .nota {
   margin: 0.8rem 0 0;
   font-size: 0.8rem;
-  color: rgba(244, 241, 234, 0.55);
 }
 
 .resumen {
@@ -16,22 +15,23 @@
 }
 
 .avatar {
-  width: 60px;
-  height: 60px;
-  border-radius: 18px;
-  background: #ffc857;
-  color: #0d1b2a;
-  font-family: 'Bricolage Grotesque', sans-serif;
+  width: 58px;
+  height: 58px;
+  border-radius: 16px;
+  background: #1d6fb8;
+  color: #ffffff;
   font-weight: 800;
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   display: flex;
   align-items: center;
   justify-content: center;
+  box-shadow: 0 4px 14px rgba(29, 111, 184, 0.3);
 }
 
 .resumen-nombre {
-  font-size: 1.5rem;
+  font-size: 1.35rem;
   font-weight: 800;
+  letter-spacing: -0.02em;
   margin: 0;
 }
 
@@ -42,15 +42,13 @@
 }
 
 .mini-valor {
-  font-family: 'Bricolage Grotesque', sans-serif;
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   font-weight: 800;
-  color: #ffc857;
+  color: #1d6fb8;
 }
 
 .mini-nombre {
   font-size: 0.75rem;
-  color: rgba(244, 241, 234, 0.6);
 }
 
 .semana {
@@ -62,18 +60,14 @@
 .dia {
   flex: 1;
   min-width: 82px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 14px;
   overflow: hidden;
 }
 
 .dia-nombre {
   text-align: center;
   font-weight: 700;
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   padding: 0.5rem;
-  background: rgba(255, 255, 255, 0.08);
 }
 
 .dia-cuerpo {
@@ -85,19 +79,17 @@
 }
 
 .bloque {
-  background: #2ec4b6;
-  color: #0d1b2a;
   border-radius: 10px;
   padding: 0.45rem 0.3rem;
-  font-size: 0.78rem;
-  font-weight: 700;
-  line-height: 1.3;
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1.35;
   text-align: center;
 }
 
 .libre {
   text-align: center;
   font-size: 0.75rem;
-  color: rgba(244, 241, 234, 0.35);
+  opacity: 0.45;
   margin-top: 1rem;
 }

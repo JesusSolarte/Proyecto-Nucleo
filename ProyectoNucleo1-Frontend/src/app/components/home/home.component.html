@@ -3,78 +3,110 @@
     <div class="col-lg-7 animate__animated animate__fadeInLeft">
       <span class="etiqueta">Proyecto Núcleo 1 · Universidad El Bosque</span>
       <h1 class="titulo-portada">
-        Tu semana,<br>
-        <span class="resaltado">sin cruces.</span>
+        Organiza y comparte tu
+        <span class="resaltado">disponibilidad docente</span>
       </h1>
-      <p class="texto-portada">
-        Registra tus bloques de disponibilidad, deja que el sistema detecte los cruces por ti
-        y comparte tu horario con quien lo necesite, sin correos ni hojas de cálculo.
+      <p class="texto-portada texto-suave">
+        Registra tus bloques horarios de la semana, evita cruces automáticamente
+        y permite que estudiantes y otros docentes consulten tu disponibilidad en
+        tiempo real.
       </p>
       <div class="d-flex flex-wrap gap-3">
         <ng-container *ngIf="auth.isLoggedIn(); else invitado">
-          <a class="btn btn-ambar btn-lg" routerLink="/dashboard">Ir a mis bloques</a>
+          <a class="btn-azul" routerLink="/dashboard">Ir a mis bloques</a>
         </ng-container>
         <ng-template #invitado>
-          <a class="btn btn-ambar btn-lg" routerLink="/login">Iniciar sesión</a>
+          <a class="btn-azul" routerLink="/login">Iniciar sesión</a>
         </ng-template>
-        <a class="btn btn-vidrio btn-lg" routerLink="/consulta">Consultar disponibilidad</a>
+        <a class="btn-borde" routerLink="/consulta">Consultar disponibilidad</a>
       </div>
     </div>
 
     <div class="col-lg-5 animate__animated animate__fadeInRight">
-      <div class="semana vidrio flotar">
-        <div class="d-flex justify-content-between align-items-center mb-3">
-          <span class="titulo-seccion">Semana tipo</span>
-          <span class="etiqueta etiqueta-turquesa">16 semanas</span>
+      <div class="semana vidrio">
+        <div class="d-flex align-items-center gap-2 mb-3">
+          <span class="punto-azul"></span>
+          <span class="titulo-seccion">Semana</span>
         </div>
-        <div class="semana-fila">
-          <span class="semana-dia">Lun</span>
-          <span class="semana-bloque bloque-ambar hora">8:00 – 10:00</span>
+        <div class="semana-grilla">
+          <div class="semana-dia columna-dia"><span class="texto-tenue">Lun</span><i class="bloque-hora hora">08:00</i></div>
+          <div class="semana-dia columna-dia"><span class="texto-tenue">Mar</span></div>
+          <div class="semana-dia columna-dia"><span class="texto-tenue">Mié</span><i class="bloque-turquesa hora">14:00</i></div>
+          <div class="semana-dia columna-dia"><span class="texto-tenue">Jue</span></div>
+          <div class="semana-dia columna-dia"><span class="texto-tenue">Vie</span><i class="bloque-hora hora">10:00</i></div>
+          <div class="semana-dia columna-dia"><span class="texto-tenue">Sáb</span></div>
+          <div class="semana-dia columna-dia"><span class="texto-tenue">Dom</span></div>
         </div>
-        <div class="semana-fila">
-          <span class="semana-dia">Mar</span>
-          <span class="semana-libre">Libre</span>
-        </div>
-        <div class="semana-fila">
-          <span class="semana-dia">Mié</span>
-          <span class="semana-bloque bloque-turquesa hora">14:00 – 16:00</span>
-        </div>
-        <div class="semana-fila">
-          <span class="semana-dia">Jue</span>
-          <span class="semana-libre">Libre</span>
-        </div>
-        <div class="semana-fila">
-          <span class="semana-dia">Vie</span>
-          <span class="semana-bloque bloque-coral hora">10:00 – 12:00</span>
-        </div>
-        <div class="semana-pie">
-          <span class="punto"></span> Sin cruces de horario
+        <div class="semana-pie etiqueta etiqueta-turquesa">
+          <span class="punto-verde"></span> Sin cruces de horario
         </div>
       </div>
     </div>
   </div>
 
-  <div class="row g-4 mt-4">
+  <div class="row g-4 mt-2">
     <div class="col-md-4 animate__animated animate__fadeInUp">
       <article class="vidrio tarjeta">
-        <span class="tarjeta-numero">01</span>
+        <span class="icono">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="4" width="18" height="17" rx="3"></rect>
+            <line x1="3" y1="9" x2="21" y2="9"></line>
+            <line x1="8" y1="2" x2="8" y2="6"></line>
+            <line x1="16" y1="2" x2="16" y2="6"></line>
+            <line x1="12" y1="13" x2="12" y2="17"></line>
+            <line x1="10" y1="15" x2="14" y2="15"></line>
+          </svg>
+        </span>
         <h3>Registra tus bloques</h3>
-        <p class="texto-suave">Crea, edita y elimina intervalos de disponibilidad por día de la semana en segundos.</p>
+        <p class="texto-tenue">Crea, edita y elimina intervalos de disponibilidad por día de la semana en segundos.</p>
       </article>
     </div>
-    <div class="col-md-4 animate__animated animate__fadeInUp animate__delay-1s">
+
+    <div class="col-md-4 animate__animated animate__fadeInUp">
       <article class="vidrio tarjeta">
-        <span class="tarjeta-numero">02</span>
+        <span class="icono icono-turquesa">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+            <polyline points="9 12 11 14 15 10"></polyline>
+          </svg>
+        </span>
         <h3>Sin cruces de horario</h3>
-        <p class="texto-suave">El sistema valida cada bloque y rechaza cualquier solapamiento con tus otros bloques.</p>
+        <p class="texto-tenue">El sistema valida cada bloque y rechaza automáticamente cualquier solapamiento.</p>
       </article>
     </div>
-    <div class="col-md-4 animate__animated animate__fadeInUp animate__delay-2s">
+
+    <div class="col-md-4 animate__animated animate__fadeInUp">
       <article class="vidrio tarjeta">
-        <span class="tarjeta-numero">03</span>
+        <span class="icono">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="7"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+        </span>
         <h3>Consulta pública</h3>
-        <p class="texto-suave">Cualquier persona puede ver la disponibilidad semanal de un docente sin iniciar sesión.</p>
+        <p class="texto-tenue">Cualquier persona puede consultar la disponibilidad semanal de un docente sin iniciar sesión.</p>
       </article>
     </div>
   </div>
+
+  <section class="vidrio pasos mt-4 animate__animated animate__fadeInUp">
+    <h2 class="titulo-seccion text-center mb-4">¿Cómo funciona?</h2>
+    <div class="row g-4">
+      <div class="col-md-4 paso">
+        <span class="paso-numero">1</span>
+        <h4>Regístrate como docente</h4>
+        <p class="texto-tenue">Crea tu cuenta con tus datos académicos.</p>
+      </div>
+      <div class="col-md-4 paso">
+        <span class="paso-numero">2</span>
+        <h4>Registra tu disponibilidad</h4>
+        <p class="texto-tenue">Agrega los bloques horarios de tu semana.</p>
+      </div>
+      <div class="col-md-4 paso">
+        <span class="paso-numero">3</span>
+        <h4>Comparte tu horario</h4>
+        <p class="texto-tenue">Consulta o comparte tu disponibilidad en cualquier momento.</p>
+      </div>
+    </div>
+  </section>
 </section>
