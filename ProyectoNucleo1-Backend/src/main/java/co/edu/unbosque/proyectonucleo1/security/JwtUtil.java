@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
@@ -23,12 +22,10 @@ import io.jsonwebtoken.security.Keys;
 public class JwtUtil {
 
 	private static final long TIEMPO_EXPIRACION = 1000L * 60 * 60 * 10;
-
-	@Value("${jwt.secret}")
-	private String secreto;
+	private static final String SECRETO = "claveSecretaJwtProyectoNucleo1DisponibilidadDocente2026UnbosqueSegura";
 
 	private Key obtenerClave() {
-		return Keys.hmacShaKeyFor(secreto.getBytes(StandardCharsets.UTF_8));
+		return Keys.hmacShaKeyFor(SECRETO.getBytes(StandardCharsets.UTF_8));
 	}
 
 	public String generarToken(String nombreUsuario, String rol) {

@@ -1,0 +1,11 @@
+target/
+dist/
+node_modules/
+.angular/
+.idea/
+.settings/
+.classpath
+.project
+.vscode/
+*.log
+ProyectoNucleo1-Backend/src/main/resources/application.properties
