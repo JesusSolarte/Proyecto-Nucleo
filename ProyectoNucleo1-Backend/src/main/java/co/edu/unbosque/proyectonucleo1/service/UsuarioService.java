@@ -5,6 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -46,6 +49,9 @@ public class UsuarioService implements CRUDoperation<UsuarioDTO> {
 	private final AuthenticationManager authenticationManager;
 	private final JwtUtil jwtUtil;
 
+	@Autowired(required = false)
+	private JavaMailSender enviadorCorreo;
+
 	public UsuarioService(UsuarioRepository usuarioRepository, PasswordEncoder passwordEncoder,
 			AuthenticationManager authenticationManager, JwtUtil jwtUtil) {
 		this.usuarioRepository = usuarioRepository;
@@ -65,7 +71,26 @@ public class UsuarioService implements CRUDoperation<UsuarioDTO> {
 	 */
 	@Transactional
 	public UsuarioDTO registrarDocente(UsuarioDTO dato) {
-		return crearConRol(dato, RolUsuario.DOCENTE);
+		UsuarioDTO nuevoDocente = crearConRol(dato, RolUsuario.DOCENTE);
+		enviarCorreoConfirmacion(nuevoDocente);
+		return nuevoDocente;
+	}
+
+	private void enviarCorreoConfirmacion(UsuarioDTO docente) {
+		if (enviadorCorreo != null) {
+			try {
+				SimpleMailMessage mensaje = new SimpleMailMessage();
+				mensaje.setTo(docente.getCorreo());
+				mensaje.setSubject("Confirmación de registro - Disponibilidad Docente");
+				mensaje.setText("Hola " + docente.getNombre() + ",\n\n"
+						+ "Tu cuenta en Disponibilidad Docente fue creada correctamente.\n"
+						+ "Tu nombre de usuario es: " + docente.getNombreUsuario() + "\n\n"
+						+ "Ya puedes iniciar sesión y registrar tus bloques de disponibilidad.");
+				enviadorCorreo.send(mensaje);
+			} catch (Exception e) {
+				System.out.println("No se pudo enviar el correo de confirmación: " + e.getMessage());
+			}
+		}
 	}
 
 	private UsuarioDTO crearConRol(UsuarioDTO dato, RolUsuario rolForzado) {
