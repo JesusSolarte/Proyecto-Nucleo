@@ -1,5 +1,5 @@
 .panel {
-  padding: 1.5rem;
+  padding: 1.2rem 0 0;
 }
 
 .lista {
@@ -11,30 +11,26 @@
   width: 100%;
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 0.6rem 0.7rem;
-  margin-bottom: 6px;
-  border-radius: 12px;
-  border: 1.5px solid transparent;
+  gap: 12px;
+  padding: 0.75rem 0.7rem;
+  border: 0;
+  border-bottom: 1px solid #d8d1bc;
+  border-radius: 0;
   background: transparent;
   color: inherit;
-  font-weight: 600;
-  font-size: 0.9rem;
+  font-weight: 500;
+  font-size: 0.95rem;
   text-align: left;
-  transition: background 0.2s ease, border-color 0.2s ease, transform 0.1s ease;
-}
-
-.docente:active {
-  transform: scale(0.98);
+  transition: background 0.2s ease, box-shadow 0.2s ease;
 }
 
 .avatar-chico {
   width: 34px;
   height: 34px;
-  border-radius: 10px;
-  background: #1d6fb8;
-  color: #ffffff;
-  font-size: 0.8rem;
+  border-radius: 2px;
+  background: #1f4d36;
+  color: #f4f1e8;
+  font-size: 0.78rem;
   font-weight: 700;
   display: flex;
   align-items: center;
@@ -49,23 +45,23 @@
 }
 
 .avatar {
-  width: 58px;
-  height: 58px;
-  border-radius: 16px;
-  background: #1d6fb8;
-  color: #ffffff;
+  width: 64px;
+  height: 64px;
+  border-radius: 2px;
+  background: #1f4d36;
+  color: #f4f1e8;
+  font-family: 'Fraunces', serif;
   font-weight: 800;
-  font-size: 1.2rem;
+  font-size: 1.5rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 14px rgba(29, 111, 184, 0.3);
+  box-shadow: 6px 6px 0 #d9a425;
 }
 
 .resumen-nombre {
-  font-size: 1.35rem;
+  font-size: 2rem;
   font-weight: 800;
-  letter-spacing: -0.02em;
   margin: 0;
 }
 
@@ -73,16 +69,22 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding-left: 1rem;
+  border-left: 1px solid rgba(128, 128, 110, 0.4);
 }
 
 .mini-valor {
-  font-size: 1.4rem;
+  font-family: 'Fraunces', serif;
+  font-size: 1.8rem;
   font-weight: 800;
-  color: #1d6fb8;
+  line-height: 1.1;
+  color: #1f4d36;
 }
 
 .mini-nombre {
-  font-size: 0.75rem;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
 }
 
 .aviso-grilla {
@@ -97,12 +99,11 @@
 
 .cuadricula {
   display: flex;
-  gap: 6px;
   min-width: 520px;
 }
 
 .columna-horas {
-  width: 40px;
+  width: 44px;
 }
 
 .cabeza-hueca {
@@ -113,7 +114,7 @@
   height: 44px;
   font-size: 0.68rem;
   text-align: right;
-  padding-right: 6px;
+  padding-right: 8px;
   transform: translateY(-7px);
 }
 
@@ -128,7 +129,7 @@
   align-items: center;
   justify-content: center;
   font-weight: 700;
-  font-size: 0.8rem;
+  font-size: 0.75rem;
 }
 
 .dia-cuerpo {
@@ -141,9 +142,9 @@
 
 .bloque {
   position: absolute;
-  left: 4px;
-  right: 4px;
-  border-radius: 8px;
+  left: 3px;
+  right: 3px;
+  border-radius: 2px;
   padding: 3px 5px;
   font-size: 0.68rem;
   font-weight: 600;

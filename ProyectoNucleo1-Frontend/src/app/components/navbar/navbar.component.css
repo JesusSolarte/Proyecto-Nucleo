@@ -1,60 +1,60 @@
 .barra {
   position: sticky;
-  top: 12px;
+  top: 0;
   z-index: 50;
-  max-width: 1180px;
-  margin: 12px auto 0;
-  padding: 0.6rem 1rem;
+  padding: 0.9rem 1.5rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-radius: 16px;
+  background: #f4f1e8;
+  border-top: 0;
+  border-bottom: 1px solid #d8d1bc;
 }
 
 .marca {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
 }
 
 .marca-icono {
-  width: 42px;
-  height: 42px;
-  border-radius: 12px;
-  background: #1d6fb8;
-  color: #ffffff;
+  width: 40px;
+  height: 40px;
+  border-radius: 2px;
+  background: #1f4d36;
+  color: #f4f1e8;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 14px rgba(29, 111, 184, 0.3);
 }
 
 .marca-texto {
   display: flex;
   flex-direction: column;
-  line-height: 1.1;
+  line-height: 1.05;
 }
 
 .marca-nombre {
+  font-family: 'Fraunces', serif;
   font-weight: 800;
-  font-size: 1rem;
-  letter-spacing: -0.02em;
+  font-size: 1.15rem;
 }
 
 .marca-sub {
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   font-weight: 600;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  opacity: 0.6;
+  color: #b8860b;
 }
 
 .enlace {
-  padding: 0.5rem 0.9rem;
-  border-radius: 10px;
-  font-size: 0.9rem;
-  font-weight: 600;
-  transition: background 0.2s ease, color 0.2s ease;
+  padding: 0.5rem 0.2rem;
+  margin: 0 0.6rem;
+  border-radius: 0;
+  font-size: 0.92rem;
+  font-weight: 500;
+  transition: color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .tema {
@@ -63,15 +63,14 @@
 
 .usuario {
   gap: 8px;
-  padding: 6px 12px;
-  font-size: 0.8rem;
+  padding: 6px 10px;
 }
 
 .punto {
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: #0f8f5f;
+  background: #d9a425;
 }
 
 .hamburguesa {
@@ -84,17 +83,18 @@
   display: block;
   width: 18px;
   height: 2px;
-  border-radius: 2px;
   background: currentColor;
 }
 
 .menu-movil {
   position: sticky;
-  top: 84px;
+  top: 72px;
   z-index: 49;
-  margin: 10px 1rem 0;
-  padding: 1rem;
+  padding: 1rem 1.5rem;
   display: flex;
   flex-direction: column;
   gap: 8px;
+  background: #f4f1e8;
+  border-top: 0;
+  border-bottom: 1px solid #d8d1bc;
 }
