@@ -8,36 +8,42 @@
 
 .acceso-caja {
   width: 100%;
-  max-width: 430px;
-  padding: 2.4rem 2.2rem;
+  max-width: 440px;
+  padding: 0.5rem 0 0.5rem 2.2rem;
+  border-top: 0;
+  border-left: 8px solid #d9a425;
 }
 
 .acceso-marca {
   display: flex;
   align-items: center;
   gap: 10px;
-  font-weight: 700;
-  font-size: 0.9rem;
-  margin-bottom: 1.6rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  margin-bottom: 1.8rem;
 }
 
 .acceso-icono {
   width: 40px;
   height: 40px;
-  border-radius: 12px;
-  background: #1d6fb8;
-  color: #ffffff;
+  border-radius: 2px;
+  background: #1f4d36;
+  color: #f4f1e8;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .acceso-pie {
-  text-align: center;
-  font-size: 0.88rem;
-  margin: 1.5rem 0 0;
+  font-size: 0.9rem;
+  margin: 1.6rem 0 0;
 }
 
 .acceso-pie a {
   font-weight: 700;
+  text-decoration: underline;
+  text-decoration-color: #d9a425;
+  text-underline-offset: 4px;
 }
