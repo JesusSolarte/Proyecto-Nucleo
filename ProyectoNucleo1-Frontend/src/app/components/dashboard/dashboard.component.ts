@@ -30,6 +30,7 @@ export class DashboardComponent implements OnInit {
   guardando = false;
   error = '';
   editandoId: number | null = null;
+  bloqueArrastrado: BloqueDisponibilidadDTO | null = null;
 
   form: FormGroup;
 
@@ -208,6 +209,62 @@ export class DashboardComponent implements OnInit {
         }
       });
     });
+  }
+
+  arrastrar(evento: DragEvent, bloque: BloqueDisponibilidadDTO): void {
+    this.bloqueArrastrado = bloque;
+    evento.dataTransfer?.setData('text', String(bloque.id));
+  }
+
+  soltar(dia: DiaSemana, hora: number): void {
+    const bloque = this.bloqueArrastrado;
+    this.bloqueArrastrado = null;
+    if (bloque === null || bloque.id === undefined) {
+      return;
+    }
+
+    const duracion = this.aMinutos(bloque.horaFin) - this.aMinutos(bloque.horaInicio);
+    const nuevoInicio = hora * 60;
+    const nuevoFin = nuevoInicio + duracion;
+
+    if (nuevoFin > 23 * 60 + 59) {
+      Swal.fire('No cabe', 'El bloque terminaría después de la medianoche.', 'warning');
+      return;
+    }
+
+    const cambio: BloqueDisponibilidadDTO = {
+      diaSemana: dia,
+      horaInicio: this.aTexto(nuevoInicio),
+      horaFin: this.aTexto(nuevoFin)
+    };
+
+    this.disponibilidad.actualizarBloque(bloque.id, cambio).subscribe({
+      next: () => {
+        Swal.fire({ icon: 'success', title: 'Bloque movido', timer: 1400, showConfirmButton: false });
+        this.cargarBloques();
+      },
+      error: (err) => {
+        Swal.fire('No se movió el bloque', this.errorHandler.extraerMensaje(err, 'No fue posible mover el bloque.'), 'error');
+      }
+    });
+  }
+
+  elegirCelda(dia: DiaSemana, hora: number): void {
+    this.editandoId = null;
+    this.form.patchValue({
+      diaSemana: dia,
+      horaInicio: this.aTexto(hora * 60),
+      horaFin: this.aTexto(Math.min((hora + 1) * 60, 23 * 60 + 59))
+    });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  private aTexto(minutos: number): string {
+    const horas = Math.floor(minutos / 60);
+    const resto = minutos % 60;
+    const textoHoras = horas < 10 ? '0' + horas : String(horas);
+    const textoMinutos = resto < 10 ? '0' + resto : String(resto);
+    return textoHoras + ':' + textoMinutos;
   }
 
   arriba(bloque: BloqueDisponibilidadDTO): number {
