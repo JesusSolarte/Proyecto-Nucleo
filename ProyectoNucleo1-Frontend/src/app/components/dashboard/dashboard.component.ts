@@ -211,6 +211,14 @@ export class DashboardComponent implements OnInit {
     });
   }
 
+  porDia(indice: number, columna: ColumnaDia): string {
+    return columna.dia;
+  }
+
+  porId(indice: number, bloque: BloqueDisponibilidadDTO): number | undefined {
+    return bloque.id;
+  }
+
   arrastrar(evento: DragEvent, bloque: BloqueDisponibilidadDTO): void {
     this.bloqueArrastrado = bloque;
     evento.dataTransfer?.setData('text', String(bloque.id));
