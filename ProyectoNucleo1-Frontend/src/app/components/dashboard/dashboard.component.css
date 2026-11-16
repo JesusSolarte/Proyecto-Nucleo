@@ -88,6 +88,12 @@
 
 .celda-hora {
   height: 44px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.celda-hora:hover {
+  background: rgba(128, 128, 110, 0.12);
 }
 
 .bloque {
@@ -99,6 +105,7 @@
   font-size: 0.68rem;
   font-weight: 600;
   overflow: hidden;
+  cursor: grab;
   transition: filter 0.15s ease, transform 0.1s ease;
 }
 
