@@ -89,7 +89,7 @@
               <div class="cabeza-hueca"></div>
               <div class="hora-etiqueta texto-tenue hora" *ngFor="let h of horas">{{ h }}:00</div>
             </div>
-            <div class="columna-dia dia" *ngFor="let col of calendario">
+            <div class="columna-dia dia" *ngFor="let col of calendario; trackBy: porDia">
               <div class="cabeza-dia dia-nombre">{{ col.etiqueta }}</div>
               <div class="dia-cuerpo">
                 <div
@@ -102,7 +102,7 @@
                 <button
                   type="button"
                   class="bloque bloque-hora hora"
-                  *ngFor="let b of col.bloques"
+                  *ngFor="let b of col.bloques; trackBy: porId"
                   [ngStyle]="{ 'top.px': arriba(b), 'height.px': alto(b) }"
                   draggable="true"
                   (dragstart)="arrastrar($event, b)"
