@@ -14,6 +14,9 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ConsultaComponent } from './components/consulta/consulta.component';
 
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
+import { AdminComponent } from './components/admin/admin.component';
+import { AdminUsuariosComponent } from './components/admin-usuarios/admin-usuarios.component';
+import { AdminBloquesComponent } from './components/admin-bloques/admin-bloques.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +26,10 @@ import { JwtInterceptor } from './interceptors/jwt.interceptor';
     LoginComponent,
     RegisterComponent,
     DashboardComponent,
-    ConsultaComponent
+    ConsultaComponent,
+    AdminComponent,
+    AdminUsuariosComponent,
+    AdminBloquesComponent
   ],
   imports: [
     BrowserModule,

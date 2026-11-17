@@ -1,0 +1,15 @@
+<section class="pagina">
+    <header class="mb-4 animate__animated animate__fadeInDown">
+        <h1 class="titulo-pagina">Panel de administración</h1>
+        <p class="subtitulo-pagina">
+            Hola, {{ auth.getCurrentUser()?.nombre }}. Gestiona los usuarios y la disponibilidad de todos los docentes.
+        </p>
+    </header>
+
+    <nav class="pestanas" aria-label="Secciones del panel">
+        <a class="enlace pestana" routerLink="/admin/usuarios" routerLinkActive="activo">Usuarios</a>
+        <a class="enlace pestana" routerLink="/admin/disponibilidad" routerLinkActive="activo">Disponibilidad</a>
+    </nav>
+
+    <router-outlet></router-outlet>
+</section>

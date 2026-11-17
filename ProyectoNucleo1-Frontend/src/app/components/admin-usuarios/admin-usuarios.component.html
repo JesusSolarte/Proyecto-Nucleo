@@ -1,0 +1,180 @@
+<div class="aviso aviso-error animate__animated animate__headShake" *ngIf="error">{{ error }}</div>
+
+<div class="row g-3 mb-4">
+    <div class="col-md-4 animate__animated animate__fadeInUp">
+        <article class="vidrio dato">
+            <span class="dato-valor">{{ usuarios.length }}</span>
+            <span class="dato-nombre texto-tenue">Usuarios registrados</span>
+        </article>
+    </div>
+    <div class="col-md-4 animate__animated animate__fadeInUp">
+        <article class="vidrio dato">
+            <span class="dato-valor">{{ totalDocentes }}</span>
+            <span class="dato-nombre texto-tenue">Docentes</span>
+        </article>
+    </div>
+    <div class="col-md-4 animate__animated animate__fadeInUp">
+        <article class="vidrio dato">
+            <span class="dato-valor">{{ totalAdministradores }}</span>
+            <span class="dato-nombre texto-tenue">Administradores</span>
+        </article>
+    </div>
+</div>
+
+<div class="row g-4">
+    <div class="col-lg-4 animate__animated animate__fadeInLeft">
+        <aside class="vidrio panel formulario">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h2 class="titulo-seccion">{{ editando ? 'Editar usuario' : 'Nuevo usuario' }}</h2>
+                <span class="etiqueta" *ngIf="editando">Editando</span>
+            </div>
+
+            <form [formGroup]="form" (ngSubmit)="guardar()" novalidate>
+                <div class="row g-2 mb-3">
+                    <div class="col-6">
+                        <label class="form-label" for="u-nombre">Nombre</label>
+                        <input id="u-nombre" class="form-control" type="text" formControlName="nombre"
+                               [class.invalido]="campoInvalido('nombre')">
+                        <small class="error-campo" *ngIf="campoInvalido('nombre')">Solo letras, entre 2 y 60.</small>
+                    </div>
+                    <div class="col-6">
+                        <label class="form-label" for="u-apellido">Apellido</label>
+                        <input id="u-apellido" class="form-control" type="text" formControlName="apellido"
+                               [class.invalido]="campoInvalido('apellido')">
+                        <small class="error-campo" *ngIf="campoInvalido('apellido')">Solo letras, entre 2 y 60.</small>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" for="u-correo">Correo</label>
+                    <input id="u-correo" class="form-control" type="email" formControlName="correo"
+                           [class.invalido]="campoInvalido('correo')">
+                    <small class="error-campo" *ngIf="campoInvalido('correo')">Ingresa un correo válido.</small>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" for="u-usuario">Nombre de usuario</label>
+                    <input id="u-usuario" class="form-control" type="text" formControlName="nombreUsuario" autocomplete="off"
+                           [class.invalido]="campoInvalido('nombreUsuario')">
+                    <small class="error-campo" *ngIf="campoInvalido('nombreUsuario')">Entre 3 y 40 caracteres.</small>
+                </div>
+
+                <div class="row g-2 mb-3">
+                    <div class="col-6">
+                        <label class="form-label" for="u-telefono">Teléfono</label>
+                        <input id="u-telefono" class="form-control" type="tel" formControlName="telefono"
+                               [class.invalido]="campoInvalido('telefono')">
+                        <small class="error-campo" *ngIf="campoInvalido('telefono')">Entre 7 y 15 dígitos.</small>
+                    </div>
+                    <div class="col-6">
+                        <label class="form-label" for="u-rol">Rol</label>
+                        <select id="u-rol" class="form-select" formControlName="rol">
+                            <option *ngFor="let rol of roles" [value]="rol.valor">{{ rol.etiqueta }}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" for="u-contrasena">
+                        {{ editando ? 'Nueva contraseña' : 'Contraseña' }}
+                    </label>
+                    <div class="campo-contrasena">
+                        <input id="u-contrasena" class="form-control" formControlName="contrasena" autocomplete="new-password"
+                               [type]="mostrarContrasena ? 'text' : 'password'"
+                               [placeholder]="editando ? 'Déjala vacía para conservar la actual' : ''"
+                               [class.invalido]="campoInvalido('contrasena')">
+                        <button type="button" class="btn-borde boton-chico" (click)="toggleContrasena()">
+                            {{ mostrarContrasena ? 'Ocultar' : 'Mostrar' }}
+                        </button>
+                    </div>
+                    <small class="error-campo" *ngIf="campoInvalido('contrasena')">Mínimo 8 caracteres.</small>
+                </div>
+
+                <div class="d-flex gap-2">
+                    <button type="submit" class="btn-azul flex-grow-1" [disabled]="guardando">
+                        <span class="spinner-border spinner-border-sm" *ngIf="guardando"></span>
+                        {{ editando ? 'Guardar cambios' : 'Crear usuario' }}
+                    </button>
+                    <button type="button" class="btn-borde" *ngIf="editando" (click)="cancelarEdicion()">Cancelar</button>
+                </div>
+            </form>
+
+            <p class="nota texto-tenue" *ngIf="editando && esYo(editando)">
+                Estás editando tu propia cuenta: tu rol y tu nombre de usuario no se pueden cambiar.
+            </p>
+        </aside>
+    </div>
+
+    <div class="col-lg-8 animate__animated animate__fadeInRight">
+        <section class="vidrio panel">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h2 class="titulo-seccion">Todos los usuarios</h2>
+                <div class="d-flex align-items-center gap-2">
+                    <span class="etiqueta">{{ usuariosFiltrados.length }}</span>
+                    <button class="btn-borde boton-chico" type="button" (click)="cargarUsuarios()">Actualizar</button>
+                </div>
+            </div>
+
+            <div class="row g-3 mb-3">
+                <div class="col-sm-8">
+                    <label class="form-label" for="u-busqueda">Buscar</label>
+                    <input id="u-busqueda" class="form-control" type="search" [(ngModel)]="busqueda"
+                           placeholder="Nombre, correo o usuario">
+                </div>
+                <div class="col-sm-4">
+                    <label class="form-label" for="u-filtro">Rol</label>
+                    <select id="u-filtro" class="form-select" [(ngModel)]="filtroRol">
+                        <option value="">Todos</option>
+                        <option *ngFor="let rol of roles" [value]="rol.valor">{{ rol.etiqueta }}</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="vacio" *ngIf="cargando">
+                <span class="spinner-border spinner-border-sm"></span> Cargando usuarios...
+            </div>
+            <div class="vacio" *ngIf="!cargando && usuarios.length === 0">
+                Aún no hay usuarios registrados.
+            </div>
+            <div class="vacio" *ngIf="!cargando && usuarios.length > 0 && usuariosFiltrados.length === 0">
+                Ningún usuario coincide con la búsqueda.
+            </div>
+
+            <div class="table-responsive" *ngIf="!cargando && usuariosFiltrados.length > 0">
+                <table class="table tabla mb-0">
+                    <thead>
+                    <tr>
+                        <th>Usuario</th>
+                        <th>Contacto</th>
+                        <th>Rol</th>
+                        <th class="text-end">Acciones</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let u of usuariosFiltrados">
+                        <td>
+                            <div class="fw-semibold">
+                                {{ u.nombre }} {{ u.apellido }}
+                                <span class="texto-tenue fw-normal" *ngIf="esYo(u)">(tú)</span>
+                            </div>
+                            <div class="texto-tenue pequeno hora">{{ u.nombreUsuario }}</div>
+                        </td>
+                        <td>
+                            <div class="pequeno">{{ u.correo }}</div>
+                            <div class="texto-tenue pequeno hora" *ngIf="u.telefono">{{ u.telefono }}</div>
+                        </td>
+                        <td>
+                            <span class="etiqueta" [class.etiqueta-turquesa]="u.rol === 'ADMIN'">{{ etiquetaRol(u.rol) }}</span>
+                        </td>
+                        <td class="text-end acciones">
+                            <button class="btn-borde boton-chico me-2" type="button" (click)="editar(u)">Editar</button>
+                            <button class="btn-peligro boton-chico" type="button" (click)="eliminar(u)" [disabled]="esYo(u)"
+                                    [attr.title]="esYo(u) ? 'No puedes eliminar tu propia cuenta' : null">Eliminar</button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+</div>

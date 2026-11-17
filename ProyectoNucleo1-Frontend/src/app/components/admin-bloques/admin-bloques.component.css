@@ -1,0 +1,124 @@
+.dato {
+    padding: 0.4rem 0 0.4rem 1.2rem;
+    display: flex;
+    flex-direction: column;
+    border-top: 0;
+    border-left: 4px solid #d9a425;
+}
+
+.dato-valor {
+    font-family: 'Fraunces', serif;
+    font-size: 2.8rem;
+    font-weight: 800;
+    color: #1f4d36;
+    line-height: 1;
+}
+
+.dato-nombre {
+    font-size: 0.78rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-top: 6px;
+}
+
+.panel {
+    padding: 1.2rem 0 0;
+}
+
+.formulario {
+    position: sticky;
+    top: 100px;
+}
+
+.nota {
+    margin: 1.2rem 0 0;
+    font-size: 0.8rem;
+    font-style: italic;
+}
+
+.aviso-grilla {
+    text-align: center;
+    font-size: 0.88rem;
+    margin-bottom: 1rem;
+}
+
+.filtro {
+    min-width: 220px;
+}
+
+.contenedor-grilla {
+    overflow-x: auto;
+}
+
+.cuadricula {
+    display: flex;
+    min-width: 520px;
+}
+
+.columna-horas {
+    width: 44px;
+}
+
+.cabeza-hueca {
+    height: 36px;
+}
+
+.hora-etiqueta {
+    height: 44px;
+    font-size: 0.68rem;
+    text-align: right;
+    padding-right: 8px;
+    transform: translateY(-7px);
+}
+
+.dia {
+    flex: 1;
+    overflow: hidden;
+}
+
+.dia-nombre {
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.75rem;
+}
+
+.dia-cuerpo {
+    position: relative;
+}
+
+.celda-hora {
+    height: 44px;
+}
+
+.bloque {
+    position: absolute;
+    left: 3px;
+    right: 3px;
+    border-radius: 2px;
+    padding: 3px 5px;
+    font-size: 0.68rem;
+    font-weight: 600;
+    overflow: hidden;
+    transition: filter 0.15s ease, transform 0.1s ease;
+}
+
+.bloque:hover {
+    filter: brightness(1.15);
+}
+
+.bloque:active {
+    transform: scale(0.97);
+}
+
+.boton-chico {
+    padding: 0.35rem 0.8rem;
+    font-size: 0.8rem;
+}
+
+.acciones {
+    white-space: nowrap;
+}

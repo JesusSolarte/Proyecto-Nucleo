@@ -23,6 +23,9 @@ export class DisponibilidadService {
     return this.http.get<BloqueDisponibilidadDTO[]>(`${API_BASE}/api/bloques`);
   }
 
+  listarTodosLosBloques(): Observable<BloqueDisponibilidadDTO[]> {
+        return this.http.get<BloqueDisponibilidadDTO[]>(`${API_BASE}/api/bloques`);
+  }
   crearBloque(bloque: BloqueDisponibilidadDTO): Observable<BloqueDisponibilidadDTO> {
     return this.http.post<BloqueDisponibilidadDTO>(`${API_BASE}/api/bloques`, bloque);
   }

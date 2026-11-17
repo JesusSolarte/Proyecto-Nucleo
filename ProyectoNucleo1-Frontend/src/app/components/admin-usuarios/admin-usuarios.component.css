@@ -1,0 +1,67 @@
+.dato {
+    padding: 0.4rem 0 0.4rem 1.2rem;
+    display: flex;
+    flex-direction: column;
+    border-top: 0;
+    border-left: 4px solid #d9a425;
+}
+
+.dato-valor {
+    font-family: 'Fraunces', serif;
+    font-size: 2.8rem;
+    font-weight: 800;
+    color: #1f4d36;
+    line-height: 1;
+}
+
+.dato-nombre {
+    font-size: 0.78rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-top: 6px;
+}
+
+.panel {
+    padding: 1.2rem 0 0;
+}
+
+.formulario {
+    position: sticky;
+    top: 100px;
+}
+
+.nota {
+    margin: 1.2rem 0 0;
+    font-size: 0.8rem;
+    font-style: italic;
+}
+
+.boton-chico {
+    padding: 0.35rem 0.8rem;
+    font-size: 0.8rem;
+}
+
+.pequeno {
+    font-size: 0.82rem;
+}
+
+.campo-contrasena {
+    display: flex;
+    align-items: flex-end;
+    gap: 8px;
+}
+
+.campo-contrasena .form-control {
+    flex: 1;
+    min-width: 0;
+}
+
+.acciones {
+    white-space: nowrap;
+}
+
+.btn-peligro:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+}

@@ -89,17 +89,25 @@
               <div class="cabeza-hueca"></div>
               <div class="hora-etiqueta texto-tenue hora" *ngFor="let h of horas">{{ h }}:00</div>
             </div>
-            <div class="columna-dia dia" *ngFor="let col of calendario">
+            <div class="columna-dia dia" *ngFor="let col of calendario; trackBy: porDia">
               <div class="cabeza-dia dia-nombre">{{ col.etiqueta }}</div>
               <div class="dia-cuerpo">
-                <div class="celda-hora" *ngFor="let h of horas"></div>
+                <div
+                  class="celda-hora"
+                  *ngFor="let h of horas"
+                  (click)="elegirCelda(col.dia, h)"
+                  (dragover)="$event.preventDefault()"
+                  (drop)="soltar(col.dia, h)"
+                  title="Clic para registrar un bloque aquí"></div>
                 <button
                   type="button"
                   class="bloque bloque-hora hora"
-                  *ngFor="let b of col.bloques"
+                  *ngFor="let b of col.bloques; trackBy: porId"
                   [ngStyle]="{ 'top.px': arriba(b), 'height.px': alto(b) }"
+                  draggable="true"
+                  (dragstart)="arrastrar($event, b)"
                   (click)="editar(b)"
-                  title="Editar bloque">
+                  title="Arrastra para mover o haz clic para editar">
                   {{ horaCorta(b.horaInicio) }} – {{ horaCorta(b.horaFin) }}
                 </button>
               </div>

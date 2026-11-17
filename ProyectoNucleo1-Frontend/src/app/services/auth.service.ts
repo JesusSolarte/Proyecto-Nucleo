@@ -67,6 +67,11 @@ export class AuthService {
     return localStorage.getItem(CLAVE_TOKEN);
   }
 
+  actualizarUsuarioActual(usuario: UsuarioDTO): void {
+      localStorage.setItem(CLAVE_USUARIO, JSON.stringify(usuario));
+      this.userSubject.next(usuario);
+    }
+
   clearLocal(): void {
     this.limpiarSesion();
   }
